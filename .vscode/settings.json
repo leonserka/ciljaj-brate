@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "reflex-brate.slnx",
+    "dotnet.defaultSolution": "ciljaj-brate.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
