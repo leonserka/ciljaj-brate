@@ -1,4 +1,4 @@
-# 🎯 Tactical Trainer
+# 🎯 Reflex brate
 
 A 3D FPS aim training game inspired by Aim Lab and CS2 mechanics, built in Unity (URP).
 
@@ -36,13 +36,6 @@ Aim Lab-inspired aesthetic with a custom color palette:
 
 - [Unity](https://unity.com/) — Universal Render Pipeline (URP)
 - C#
-
-## Team
-
-| Member | Role |
-|--------|------|
-| Šerka | Development |
-| Kačič | Development |
 
 ---
 
