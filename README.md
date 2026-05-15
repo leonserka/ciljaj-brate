@@ -1,10 +1,10 @@
-# 🎯 Reflex brate
+# 🎯 ciljaj brate
 
 A 3D FPS aim training game inspired by Aim Lab and CS2 mechanics, built in Unity (URP).
 
 ## About
 
-Tactical Trainer is a first-person shooter training tool designed to improve aiming precision and game sense. It features two core modes — **Aim Training** and **Prefire Practice** — with an in-world settings panel where players change game settings by shooting at physical buttons on the map.
+Ciljaj Brate is a first-person shooter training tool designed to improve aiming precision and game sense. It features two core modes — **Aim Training** and **Prefire Practice** — with an in-world settings panel where players change game settings by shooting at physical buttons on the map.
 
 ## Features
 
