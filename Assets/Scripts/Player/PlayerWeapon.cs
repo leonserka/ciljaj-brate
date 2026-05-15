@@ -64,7 +64,12 @@ public class PlayerWeapon : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, maxRange, hitMask, QueryTriggerInteraction.Ignore))
         {
             IShootable shootable = hit.collider.GetComponentInParent<IShootable>();
+            ModeManager.Current?.HandleShot(shootable is Target);
             if (shootable != null) shootable.OnShot(hit, ray.direction);
+        }
+        else
+        {
+            ModeManager.Current?.HandleShot(false);
         }
     }
 
