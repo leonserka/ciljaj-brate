@@ -11,6 +11,7 @@ public class ModeManager : MonoBehaviour
 
     public string CurrentModeName => activeMode != null ? activeMode.ModeName : "No Mode";
     public StatsManager Stats => statsManager;
+    public GameModeSO ActiveMode => activeMode;
 
     private void Awake()
     {
@@ -31,7 +32,8 @@ public class ModeManager : MonoBehaviour
 
     private void Start()
     {
-        activeMode?.OnEnter(this);
+        if (RoundController.Instance == null)
+            activeMode?.OnEnter(this);
     }
 
     private void OnDestroy()
@@ -41,6 +43,19 @@ public class ModeManager : MonoBehaviour
 
         if (Instance == this)
             Instance = null;
+    }
+
+    public TargetSpawner Spawner => targetSpawner;
+
+    public void SwitchMode(GameModeSO newMode)
+    {
+        if (activeMode != null)
+            activeMode.OnExit(this);
+
+        activeMode = newMode;
+
+        if (activeMode != null)
+            activeMode.OnEnter(this);
     }
 
     public void HandleShot(bool hitTarget)

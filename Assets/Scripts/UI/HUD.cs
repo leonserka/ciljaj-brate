@@ -1,32 +1,42 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] private ModeManager modeManager;
     [SerializeField] private StatsManager statsManager;
-    [SerializeField] private Text modeText;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text accuracyText;
-    [SerializeField] private Text timerText;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text accuracyText;
+    [SerializeField] private TMP_Text timerText;
 
-    private SessionStats _lastStats;
+    [Header("Score Pop")]
+    [SerializeField] private float popScale = 1.4f;
+    [SerializeField] private float popSpeed = 8f;
+
+    [Header("Number Rolling")]
+    [SerializeField] private float rollSpeed = 12f;
+
+    private float _displayScore;
+    private float _displayAccuracy;
+    private int _targetScore;
+    private float _targetAccuracy;
+    private int _lastScore;
+    private Vector3 _scoreBaseScale;
+    private float _scorePunch;
 
     private void Awake()
     {
-        if (modeManager == null)
-            modeManager = FindAnyObjectByType<ModeManager>();
-
         if (statsManager == null)
             statsManager = FindAnyObjectByType<StatsManager>();
     }
 
     private void OnEnable()
     {
+        if (scoreText != null)
+            _scoreBaseScale = scoreText.transform.localScale;
+
         if (statsManager != null)
             statsManager.StatsChanged += HandleStatsChanged;
-
-        Refresh();
+        SnapToCurrentStats();
     }
 
     private void OnDisable()
@@ -37,40 +47,79 @@ public class HUD : MonoBehaviour
 
     private void Update()
     {
+        AnimateScore();
+        AnimateAccuracy();
         RefreshTimer();
     }
 
     private void HandleStatsChanged(SessionStats stats)
     {
-        _lastStats = stats;
-        Refresh();
+        int newScore = Mathf.RoundToInt(stats.Score);
+        if (newScore > _lastScore)
+            _scorePunch = 1f;
+        _lastScore = newScore;
+
+        _targetScore = newScore;
+        _targetAccuracy = stats.Accuracy * 100f;
     }
 
-    private void Refresh()
+    private void SnapToCurrentStats()
     {
-        if (statsManager != null)
-            _lastStats = statsManager.CurrentStats;
+        if (statsManager == null) return;
+        var s = statsManager.CurrentStats;
+        _targetScore = Mathf.RoundToInt(s.Score);
+        _targetAccuracy = s.Accuracy * 100f;
+        _displayScore = _targetScore;
+        _displayAccuracy = _targetAccuracy;
+        _lastScore = _targetScore;
+        UpdateScoreText();
+        UpdateAccuracyText();
+    }
 
-        if (modeText != null)
-            modeText.text = modeManager != null ? modeManager.CurrentModeName : "Single Static";
+    private void AnimateScore()
+    {
+        if (scoreText == null) return;
 
+        _displayScore = Mathf.MoveTowards(_displayScore, _targetScore, rollSpeed * Time.deltaTime * Mathf.Max(1f, Mathf.Abs(_targetScore - _displayScore)));
+        UpdateScoreText();
+
+        // Pop animation
+        _scorePunch = Mathf.MoveTowards(_scorePunch, 0f, popSpeed * Time.deltaTime);
+        float scale = 1f + _scorePunch * (popScale - 1f);
+        scoreText.transform.localScale = _scoreBaseScale * scale;
+    }
+
+    private void AnimateAccuracy()
+    {
+        if (accuracyText == null) return;
+        _displayAccuracy = Mathf.Lerp(_displayAccuracy, _targetAccuracy, rollSpeed * Time.deltaTime);
+        UpdateAccuracyText();
+    }
+
+    private void UpdateScoreText()
+    {
         if (scoreText != null)
-            scoreText.text = $"Score {Mathf.RoundToInt(_lastStats.Score)}";
+            scoreText.text = Mathf.RoundToInt(_displayScore).ToString();
+    }
 
+    private void UpdateAccuracyText()
+    {
         if (accuracyText != null)
-            accuracyText.text = $"Acc {(_lastStats.Accuracy * 100f):0}%  H {_lastStats.Hits} / S {_lastStats.ShotsFired}";
-
-        RefreshTimer();
+            accuracyText.text = Mathf.RoundToInt(_displayAccuracy) + "%";
     }
 
     private void RefreshTimer()
     {
-        if (timerText == null)
-            return;
+        if (timerText == null) return;
 
-        float elapsed = statsManager != null ? statsManager.ElapsedSeconds : _lastStats.ElapsedSeconds;
-        int minutes = Mathf.FloorToInt(elapsed / 60f);
-        int seconds = Mathf.FloorToInt(elapsed % 60f);
+        float display;
+        if (RoundController.Instance != null)
+            display = RoundController.Instance.TimeRemaining;
+        else
+            display = statsManager != null ? statsManager.ElapsedSeconds : 0f;
+
+        int minutes = Mathf.FloorToInt(display / 60f);
+        int seconds = Mathf.FloorToInt(display % 60f);
         timerText.text = $"{minutes:00}:{seconds:00}";
     }
 }

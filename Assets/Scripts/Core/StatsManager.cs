@@ -12,9 +12,20 @@ public class StatsManager : MonoBehaviour
     private int _misses;
     private float _sessionStartTime;
     private bool _sessionRunning;
+    private bool _lastShotHit;
+    private float _score;
+    private int _combo;
+    private int _bestCombo;
 
-    public SessionStats CurrentStats => new SessionStats(_shotsFired, _hits, _misses, ElapsedSeconds);
+    private const float BaseHitPoints = 100f;
+    private const float MissDeduction = 50f;
+    private const float MaxMultiplier = 5f;
+
+    public SessionStats CurrentStats => new SessionStats(
+        _shotsFired, _hits, _misses, ElapsedSeconds, _lastShotHit, _score, _combo);
     public float ElapsedSeconds => _sessionRunning ? Time.time - _sessionStartTime : 0f;
+    public int Combo => _combo;
+    public int BestCombo => _bestCombo;
 
     private void Awake()
     {
@@ -23,7 +34,6 @@ public class StatsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
 
@@ -40,17 +50,32 @@ public class StatsManager : MonoBehaviour
         _misses = 0;
         _sessionStartTime = Time.time;
         _sessionRunning = true;
+        _score = 0;
+        _combo = 0;
+        _bestCombo = 0;
         Publish();
     }
 
     public void RecordShot(bool hit)
     {
         _shotsFired++;
+        _lastShotHit = hit;
 
         if (hit)
+        {
             _hits++;
+            _combo++;
+            if (_combo > _bestCombo) _bestCombo = _combo;
+
+            float multiplier = Mathf.Min(1f + (_combo - 1) * 0.15f, MaxMultiplier);
+            _score += BaseHitPoints * multiplier;
+        }
         else
+        {
             _misses++;
+            _combo = 0;
+            _score = Mathf.Max(0, _score - MissDeduction);
+        }
 
         Publish();
     }

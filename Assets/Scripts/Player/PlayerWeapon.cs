@@ -19,7 +19,6 @@ public class PlayerWeapon : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
         if (playerCamera == null) playerCamera = Camera.main;
-        if (shotClip == null) shotClip = GenerateShotClip();
 
         muzzleFlash = GetComponentInChildren<ParticleSystem>(true);
         if (muzzleFlash != null)
@@ -63,15 +62,19 @@ public class PlayerWeapon : MonoBehaviour
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, maxRange, hitMask, QueryTriggerInteraction.Ignore))
         {
+            LastShotPoint = hit.point;
             IShootable shootable = hit.collider.GetComponentInParent<IShootable>();
             ModeManager.Current?.HandleShot(shootable is Target);
             if (shootable != null) shootable.OnShot(hit, ray.direction);
         }
         else
         {
+            LastShotPoint = ray.origin + ray.direction * 20f;
             ModeManager.Current?.HandleShot(false);
         }
     }
+
+    public static Vector3 LastShotPoint { get; private set; }
 
     private static AudioClip GenerateShotClip()
     {

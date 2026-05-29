@@ -2,7 +2,9 @@
     "name": "Game.Editor",
     "rootNamespace": "TacticalTrainer.Editor",
     "references": [
-        "Game.Runtime"
+        "Game.Runtime",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"

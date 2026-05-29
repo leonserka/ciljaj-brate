@@ -108,9 +108,17 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
+# Aim Training arena model — Sketchfab Standard license, not redistributable.
+# Each dev downloads it separately from Sketchfab.
+/[Aa]ssets/[Mm]odels/[Ee]nvironment/AimArena/
+
 # MCP for Unity — dev tooling, not a game asset.
 # realvirtual-MCP is a ~114 MB Python bridge with its own git remote
 # (github.com/game4automation/realvirtual-MCP). Each dev installs it locally;
 # it must never ship inside StreamingAssets builds.
 /[Aa]ssets/[Ss]treaming[Aa]ssets/realvirtual-MCP/
 /[Aa]ssets/[Ss]treaming[Aa]ssets/realvirtual-MCP.meta
+
+# Dev screenshots — not game assets, just captures taken while building.
+/[Aa]ssets/[Ss]creenshots/
+/[Aa]ssets/[Ss]creenshots.meta
