@@ -10,6 +10,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private float clickScale = 0.95f;
     [SerializeField] private float speed = 12f;
     [SerializeField] private bool textMode;
+    public float hoverVolume = 1f;
 
     private Vector3 _baseScale;
     private Vector3 _targetScale;
@@ -76,7 +77,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else
             _targetScale = _baseScale * hoverScale;
 
-        PlayClip(_hoverClip);
+        PlayClip(_hoverClip, hoverVolume);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -96,7 +97,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (!textMode)
             _targetScale = _baseScale * clickScale;
-        PlayClip(_clickClip);
+        PlayClip(_clickClip, 1f);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -105,9 +106,9 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
             _targetScale = _baseScale * hoverScale;
     }
 
-    private static void PlayClip(AudioClip clip)
+    private static void PlayClip(AudioClip clip, float volume)
     {
         if (clip != null && _sharedSource != null)
-            _sharedSource.PlayOneShot(clip);
+            _sharedSource.PlayOneShot(clip, volume);
     }
 }

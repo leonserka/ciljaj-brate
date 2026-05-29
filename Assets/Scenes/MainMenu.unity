@@ -229,6 +229,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!222 &62078435
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -749,6 +750,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!222 &145935895
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1260,6 +1262,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!114 &313855367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2302,7 +2305,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550262926}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: e9a59271758997047b9941d3e5fed00e, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 0647d6062f6e9424fbaa19b3c2e63f4f, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2316,14 +2319,12 @@ VideoPlayer:
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -4389,6 +4390,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!114 &1194504246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6008,6 +6010,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!222 &1667890138
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6162,6 +6165,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!114 &1699257627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7263,6 +7267,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!114 &1934679352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7752,6 +7757,7 @@ MonoBehaviour:
   clickScale: 0.95
   speed: 12
   textMode: 0
+  hoverVolume: 1
 --- !u!114 &2036708967
 MonoBehaviour:
   m_ObjectHideFlags: 0

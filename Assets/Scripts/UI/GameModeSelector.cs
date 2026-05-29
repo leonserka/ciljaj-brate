@@ -22,11 +22,12 @@ public class GameModeSelector : MonoBehaviour
         public string category;
         public string description;
         public string sceneName;
+        public string thumbnail;
     }
 
     private readonly ModeInfo[] _modes = new[]
     {
-        new ModeInfo { title = "COMBO SHREDDER", category = "SPEED", description = "Targets spawn close in a tight center area. Build combos fast. 1:30 timer.", sceneName = "AimTraining" },
+        new ModeInfo { title = "COMBO SHREDDER", category = "SPEED", description = "Targets spawn close in a tight center area. Build combos fast. 1 minute timer.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot" },
         new ModeInfo { title = "CLASSIC", category = "PRECISION", description = "Single targets spawn randomly across the wall. No time limit.", sceneName = "AimTraining" },
         new ModeInfo { title = "GRIDSHOT", category = "PRECISION", description = "Targets appear in a grid. Click as many as you can.", sceneName = "AimTraining" },
         new ModeInfo { title = "SPIDERSHOT", category = "SPEED", description = "Single targets spawn randomly. React and eliminate fast.", sceneName = "AimTraining" },
@@ -92,18 +93,37 @@ public class GameModeSelector : MonoBehaviour
         thumbImg.color = new Color(0.05f, 0.05f, 0.07f, 0.8f);
         thumbImg.raycastTarget = false;
 
-        // Icon hint in thumbnail
-        var iconGO = new GameObject("Icon", typeof(RectTransform));
-        iconGO.transform.SetParent(thumb.transform, false);
-        var iconRect = iconGO.GetComponent<RectTransform>();
-        iconRect.anchorMin = new Vector2(0.5f, 0.5f);
-        iconRect.anchorMax = new Vector2(0.5f, 0.5f);
-        iconRect.sizeDelta = new Vector2(40, 40);
-        var iconTMP = iconGO.AddComponent<TextMeshProUGUI>();
-        iconTMP.text = "◎";
-        iconTMP.fontSize = 32;
-        iconTMP.color = new Color(Cherry.r, Cherry.g, Cherry.b, 0.3f);
-        iconTMP.alignment = TextAlignmentOptions.Center;
+        Sprite thumbSprite = string.IsNullOrEmpty(mode.thumbnail) ? null : Resources.Load<Sprite>(mode.thumbnail);
+        if (thumbSprite != null)
+        {
+            // Image lives in a child that fills the box, so its native size never drives the card layout.
+            var imgGO = new GameObject("Image", typeof(RectTransform));
+            imgGO.transform.SetParent(thumb.transform, false);
+            var imgRect = imgGO.GetComponent<RectTransform>();
+            imgRect.anchorMin = Vector2.zero;
+            imgRect.anchorMax = Vector2.one;
+            imgRect.offsetMin = Vector2.zero;
+            imgRect.offsetMax = Vector2.zero;
+            var img = imgGO.AddComponent<Image>();
+            img.sprite = thumbSprite;
+            img.preserveAspect = true;
+            img.raycastTarget = false;
+        }
+        else
+        {
+            // Icon hint placeholder when no thumbnail is available
+            var iconGO = new GameObject("Icon", typeof(RectTransform));
+            iconGO.transform.SetParent(thumb.transform, false);
+            var iconRect = iconGO.GetComponent<RectTransform>();
+            iconRect.anchorMin = new Vector2(0.5f, 0.5f);
+            iconRect.anchorMax = new Vector2(0.5f, 0.5f);
+            iconRect.sizeDelta = new Vector2(40, 40);
+            var iconTMP = iconGO.AddComponent<TextMeshProUGUI>();
+            iconTMP.text = "◎";
+            iconTMP.fontSize = 32;
+            iconTMP.color = new Color(Cherry.r, Cherry.g, Cherry.b, 0.3f);
+            iconTMP.alignment = TextAlignmentOptions.Center;
+        }
 
         // Info section (title + category + description)
         var info = new GameObject("Info", typeof(RectTransform));
