@@ -19,20 +19,22 @@ public class GameModeSelector : MonoBehaviour
     private struct ModeInfo
     {
         public string title;
+        public string modeName;
         public string category;
         public string description;
         public string sceneName;
         public string thumbnail;
+        public bool playable;
     }
 
     private readonly ModeInfo[] _modes = new[]
     {
-        new ModeInfo { title = "COMBO SHREDDER", category = "SPEED", description = "Targets spawn close in a tight center area. Build combos fast. 1 minute timer.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot" },
-        new ModeInfo { title = "CLASSIC", category = "PRECISION", description = "Single targets spawn randomly across the wall. No time limit.", sceneName = "AimTraining" },
-        new ModeInfo { title = "GRIDSHOT", category = "PRECISION", description = "Targets appear in a grid. Click as many as you can.", sceneName = "AimTraining" },
-        new ModeInfo { title = "SPIDERSHOT", category = "SPEED", description = "Single targets spawn randomly. React and eliminate fast.", sceneName = "AimTraining" },
-        new ModeInfo { title = "FLICKING", category = "FLICK", description = "Flick between targets that appear at wide angles.", sceneName = "AimTraining" },
-        new ModeInfo { title = "SIXSHOT", category = "PRECISION", description = "Six targets at once. Clear them all as fast as possible.", sceneName = "AimTraining" },
+        new ModeInfo { title = "COMBO SHREDDER", modeName = "Combo Shredder", category = "SPEED", description = "Targets spawn close in a tight center area. Build combos fast. 1 minute timer.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
+        new ModeInfo { title = "CLASSIC", modeName = "Classic", category = "PRECISION", description = "Single targets spawn randomly across the wall. No time limit.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
+        new ModeInfo { title = "GRIDSHOT", modeName = "Gridshot", category = "PRECISION", description = "Targets appear in a grid. Click as many as you can.", sceneName = "AimTraining" },
+        new ModeInfo { title = "SPIDERSHOT", modeName = "Spidershot", category = "SPEED", description = "Single targets spawn randomly. React and eliminate fast.", sceneName = "AimTraining" },
+        new ModeInfo { title = "FLICKING", modeName = "Flicking", category = "FLICK", description = "Flick between targets that appear at wide angles.", sceneName = "AimTraining" },
+        new ModeInfo { title = "SIXSHOT", modeName = "Sixshot", category = "PRECISION", description = "Six targets at once. Clear them all as fast as possible.", sceneName = "AimTraining" },
     };
 
     private void Awake()
@@ -173,17 +175,19 @@ public class GameModeSelector : MonoBehaviour
         descTMP.text = mode.description;
         descTMP.fontSize = 12;
         descTMP.color = new Color(1f, 1f, 1f, 0.4f);
-        descTMP.enableWordWrapping = true;
+        descTMP.textWrappingMode = TextWrappingModes.Normal;
 
         // Play button
         var playGO = new GameObject("PlayBtn", typeof(RectTransform));
         playGO.transform.SetParent(card.transform, false);
         playGO.AddComponent<LayoutElement>().preferredHeight = 36;
         var playImg = playGO.AddComponent<Image>();
-        playImg.color = PlayBtnColor;
+        playImg.color = mode.playable ? PlayBtnColor : new Color(0.13f, 0.13f, 0.15f, 0.95f);
         var playBtn = playGO.AddComponent<Button>();
         playBtn.transition = Selectable.Transition.None;
-        playGO.AddComponent<MenuButtonEffect>();
+        playBtn.interactable = mode.playable;
+        if (mode.playable)
+            playGO.AddComponent<MenuButtonEffect>();
 
         var playLbl = new GameObject("Label", typeof(RectTransform));
         playLbl.transform.SetParent(playGO.transform, false);
@@ -193,9 +197,9 @@ public class GameModeSelector : MonoBehaviour
         playLblR.offsetMin = Vector2.zero;
         playLblR.offsetMax = Vector2.zero;
         var playTMP = playLbl.AddComponent<TextMeshProUGUI>();
-        playTMP.text = "PLAY NOW";
+        playTMP.text = mode.playable ? "PLAY NOW" : "COMING SOON";
         playTMP.fontSize = 14;
-        playTMP.color = Color.white;
+        playTMP.color = mode.playable ? Color.white : new Color(1f, 1f, 1f, 0.35f);
         playTMP.alignment = TextAlignmentOptions.Center;
         playTMP.fontStyle = FontStyles.Bold;
 
@@ -204,16 +208,22 @@ public class GameModeSelector : MonoBehaviour
         hover.Init(cardImg, outline);
 
         string scene = mode.sceneName;
-        playBtn.onClick.AddListener(() =>
+        string modeName = mode.modeName;
+        if (mode.playable)
         {
-            if (_clickClip != null && _uiAudio != null)
-                _uiAudio.PlayOneShot(_clickClip);
+            playBtn.onClick.AddListener(() =>
+            {
+                if (_clickClip != null && _uiAudio != null)
+                    _uiAudio.PlayOneShot(_clickClip);
 
-            if (LobbyMusic.Instance != null)
-                LobbyMusic.Instance.FadeOutAndStop(0.8f);
+                AimModeSelection.SelectMode(modeName);
 
-            StartCoroutine(LoadAfterFade(scene));
-        });
+                if (LobbyMusic.Instance != null)
+                    LobbyMusic.Instance.FadeOutAndStop(0.8f);
+
+                StartCoroutine(LoadAfterFade(scene));
+            });
+        }
     }
 
     private System.Collections.IEnumerator LoadAfterFade(string sceneName)

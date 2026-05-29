@@ -3,6 +3,7 @@ using UnityEngine;
 public class ModeManager : MonoBehaviour
 {
     [SerializeField] private GameModeSO activeMode;
+    [SerializeField] private GameModeSO[] availableModes;
     [SerializeField] private TargetSpawner targetSpawner;
     [SerializeField] private StatsManager statsManager;
 
@@ -12,6 +13,7 @@ public class ModeManager : MonoBehaviour
     public string CurrentModeName => activeMode != null ? activeMode.ModeName : "No Mode";
     public StatsManager Stats => statsManager;
     public GameModeSO ActiveMode => activeMode;
+    public GameModeSO[] AvailableModes => availableModes;
 
     private void Awake()
     {
@@ -28,6 +30,8 @@ public class ModeManager : MonoBehaviour
 
         if (statsManager == null)
             statsManager = FindAnyObjectByType<StatsManager>();
+
+        activeMode = AimModeSelection.ResolveSelectedMode(activeMode, availableModes);
     }
 
     private void Start()
@@ -53,6 +57,9 @@ public class ModeManager : MonoBehaviour
             activeMode.OnExit(this);
 
         activeMode = newMode;
+
+        if (activeMode != null)
+            AimModeSelection.SelectMode(activeMode.ModeName);
 
         if (activeMode != null)
             activeMode.OnEnter(this);

@@ -131,10 +131,14 @@ public class PauseMenu : MonoBehaviour
         _rootView.SetActive(false);
         _crosshairView.SetActive(false);
         _modeView.SetActive(true);
+        UpdateModeButtonStates();
     }
 
-    private void StartMode(string sceneName)
+    private void StartMode(string sceneName, string modeName = null)
     {
+        if (!string.IsNullOrEmpty(modeName))
+            AimModeSelection.SelectMode(modeName);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(sceneName);
     }
@@ -215,12 +219,48 @@ public class PauseMenu : MonoBehaviour
         vlg.childControlHeight = true;
         vlg.childAlignment = TextAnchor.UpperCenter;
 
-        // Only Combo Shredder is implemented; it restarts the current arena scene.
         string scene = SceneManager.GetActiveScene().name;
-        MakeButton("ComboBtn", col.transform, "COMBO SHREDDER", Cherry).onClick.AddListener(() => StartMode(scene));
+        MakeModeButton("ComboBtn", col.transform, "COMBO SHREDDER", "Combo Shredder", scene);
+        MakeModeButton("ClassicBtn", col.transform, "CLASSIC", "Classic", scene);
         MakeModeSoon("Gridshot", col.transform, "GRIDSHOT");
         MakeModeSoon("Spidershot", col.transform, "SPIDERSHOT");
         MakeModeSoon("Flicking", col.transform, "FLICKING");
+        MakeModeSoon("Sixshot", col.transform, "SIXSHOT");
+    }
+
+    private void MakeModeButton(string name, Transform parent, string label, string modeName, string sceneName)
+    {
+        var bg = IsCurrentMode(modeName) ? Cherry : ButtonBG;
+        MakeButton(name, parent, label, bg).onClick.AddListener(() => StartMode(sceneName, modeName));
+    }
+
+    private void UpdateModeButtonStates()
+    {
+        SetModeButtonColor("ComboBtn", IsCurrentMode("Combo Shredder"));
+        SetModeButtonColor("ClassicBtn", IsCurrentMode("Classic"));
+    }
+
+    private void SetModeButtonColor(string buttonName, bool selected)
+    {
+        if (_modeView == null)
+            return;
+
+        Transform button = _modeView.transform.Find("Panel/Modes/" + buttonName);
+        if (button == null)
+            return;
+
+        Image image = button.GetComponent<Image>();
+        if (image != null)
+            image.color = selected ? Cherry : ButtonBG;
+    }
+
+    private static bool IsCurrentMode(string modeName)
+    {
+        ModeManager manager = ModeManager.Current;
+        if (manager != null && manager.ActiveMode != null)
+            return string.Equals(manager.ActiveMode.ModeName, modeName, System.StringComparison.OrdinalIgnoreCase);
+
+        return AimModeSelection.IsSelected(modeName);
     }
 
     private static void MakeModeSoon(string name, Transform parent, string label)
