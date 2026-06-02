@@ -76,9 +76,21 @@ public class ModeManager : MonoBehaviour
         statsManager?.ResetSession();
     }
 
+    private void Update()
+    {
+        activeMode?.OnUpdate(this);
+    }
+
     public Target SpawnTarget()
     {
         Target target = targetSpawner != null ? targetSpawner.Spawn() : null;
+        SubscribeTarget(target);
+        return target;
+    }
+
+    public Target SpawnTargetAt(Vector3 worldPosition)
+    {
+        Target target = targetSpawner != null ? targetSpawner.SpawnAt(worldPosition) : null;
         SubscribeTarget(target);
         return target;
     }

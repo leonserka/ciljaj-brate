@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.5
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 8b7dd0809c7c6498789fa32a61eaa6cb, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c494c335823f54b52b2e87e1b7a63a23, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -269,8 +269,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82891156}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.29752463, y: -0.19711888, z: -0.063812755, w: -0.93196094}
+  m_LocalPosition: {x: -6.58885, y: -11.594405, z: -14.904926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1003,7 +1003,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  jumpHeight: 1
+  gravity: -20
+  crouchHeight: 0.55
+  crouchSpeed: 10
   controller: {fileID: 0}
+  footstepClips:
+  - {fileID: 8300000, guid: 2f64a307935d91844ae99f849c3be93c, type: 3}
+  - {fileID: 8300000, guid: 4ed6a043cf783f24d9e62846242cdbec, type: 3}
+  - {fileID: 8300000, guid: 90f4f53b672825e4b91142a4d2e2f4f4, type: 3}
+  - {fileID: 8300000, guid: d036a873c5f24a743b501e59e0d8d988, type: 3}
+  - {fileID: 8300000, guid: a248115a62d7fa6418c9667fc3b78e54, type: 3}
+  - {fileID: 8300000, guid: 36d335ab1929e3b4791e3546e00c22b6, type: 3}
+  jumpLaunchClip: {fileID: 8300000, guid: 9103c0fcfce001845bc5c1d2ef6425fd, type: 3}
+  jumpLandClip: {fileID: 8300000, guid: 2803566c46cad1a44a40b8abcbab16d9, type: 3}
+  footstepInterval: 0.35
+  footstepVolume: 0.4
 --- !u!143 &300000017
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1022,13 +1037,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 0.85
+  m_Radius: 0.18
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.425, z: 0}
 --- !u!1 &300000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,6 +2439,10 @@ MonoBehaviour:
   availableModes:
   - {fileID: 11400000, guid: fae084e92dc37124e80f5bad21498d52, type: 2}
   - {fileID: 11400000, guid: 1df41b7c61dcb03479ded403501c1b2c, type: 2}
+  - {fileID: 11400000, guid: 0f7de32240770b04c87b52237f9ee852, type: 2}
+  - {fileID: 11400000, guid: 927f060a091eeb94fae6aa15c7405d27, type: 2}
+  - {fileID: 11400000, guid: 7f315923105bfc740b235628cde5bdeb, type: 2}
+  - {fileID: 11400000, guid: 1cf934e7a5e33c74c9271c5fc6a5c616, type: 2}
   targetSpawner: {fileID: 1131495332}
   statsManager: {fileID: 1131602116}
 --- !u!4 &657906510
@@ -5113,7 +5132,7 @@ Transform:
   m_GameObject: {fileID: 2074753553}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

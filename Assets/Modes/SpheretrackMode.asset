@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e6b89378439f64fb0f1f6154a75bda, type: 3}
+  m_Name: SpheretrackMode
+  m_EditorClassIdentifier: Game.Runtime::SpheretrackMode
+  modeName: Spheretrack
+  duration: 0
+  spawnPosition: {x: 0, y: 2.6, z: 7}
+  targetRadius: 0.7
+  moveSpeed: 4
+  moveBounds: 5

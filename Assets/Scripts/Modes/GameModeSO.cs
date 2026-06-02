@@ -12,4 +12,5 @@ public abstract class GameModeSO : ScriptableObject
     public abstract void OnExit(ModeManager manager);
     public abstract void OnTargetKilled(ModeManager manager, Target target);
     public abstract void OnShot(ModeManager manager, bool hitTarget);
+    public virtual void OnUpdate(ModeManager manager) { }
 }

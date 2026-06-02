@@ -26,6 +26,18 @@ public class PlayerWeapon : MonoBehaviour
             muzzleFlash.gameObject.SetActive(true);
             muzzleFlash.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
+
+        ApplyViewmodelVisibility();
+    }
+
+    private void ApplyViewmodelVisibility()
+    {
+        bool show = GameplaySettings.ShowViewmodel;
+        foreach (var r in GetComponentsInChildren<Renderer>(true))
+        {
+            if (r is ParticleSystemRenderer) continue;
+            r.enabled = show;
+        }
     }
 
     private void OnEnable()

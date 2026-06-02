@@ -29,12 +29,12 @@ public class GameModeSelector : MonoBehaviour
 
     private readonly ModeInfo[] _modes = new[]
     {
-        new ModeInfo { title = "COMBO SHREDDER", modeName = "Combo Shredder", category = "SPEED", description = "Targets spawn close in a tight center area. Build combos fast. 1 minute timer.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
-        new ModeInfo { title = "CLASSIC", modeName = "Classic", category = "PRECISION", description = "Single targets spawn randomly across the wall. No time limit.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
-        new ModeInfo { title = "GRIDSHOT", modeName = "Gridshot", category = "PRECISION", description = "Targets appear in a grid. Click as many as you can.", sceneName = "AimTraining" },
-        new ModeInfo { title = "SPIDERSHOT", modeName = "Spidershot", category = "SPEED", description = "Single targets spawn randomly. React and eliminate fast.", sceneName = "AimTraining" },
-        new ModeInfo { title = "FLICKING", modeName = "Flicking", category = "FLICK", description = "Flick between targets that appear at wide angles.", sceneName = "AimTraining" },
-        new ModeInfo { title = "SIXSHOT", modeName = "Sixshot", category = "PRECISION", description = "Six targets at once. Clear them all as fast as possible.", sceneName = "AimTraining" },
+        new ModeInfo { title = "COMBO SHREDDER", modeName = "Combo Shredder", category = "SPEED", description = "3 targets on a grid. Destroy one, another spawns. Build combos fast.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
+        new ModeInfo { title = "CLASSIC", modeName = "Classic", category = "FLICK", description = "Single targets spawn randomly across the wall. Pure flicking practice.", sceneName = "AimTraining", thumbnail = "Thumbnails/gridshot", playable = true },
+        new ModeInfo { title = "SPIDERSHOT", modeName = "Spidershot", category = "FLICK", description = "Alternate between center and outer targets. Train crosshair resets.", sceneName = "AimTraining", playable = true },
+        new ModeInfo { title = "MICROSHOT", modeName = "Microshot", category = "PRECISION", description = "Tiny targets in a tight area. Pixel-perfect micro-adjustments.", sceneName = "AimTraining", playable = true },
+        new ModeInfo { title = "SIXSHOT", modeName = "Sixshot", category = "PRECISION", description = "6 tiny targets always on screen. Accuracy over speed.", sceneName = "AimTraining", playable = true },
+        new ModeInfo { title = "STRAFETRACK", modeName = "Strafetrack", category = "TRACKING", description = "Track a target strafing left and right. Keep your crosshair on it.", sceneName = "AimTraining", playable = true },
     };
 
     private void Awake()

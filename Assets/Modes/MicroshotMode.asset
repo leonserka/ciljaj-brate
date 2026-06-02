@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b76f98ef3d1a44b8a17d7240c44915, type: 3}
+  m_Name: MicroshotMode
+  m_EditorClassIdentifier: Game.Runtime::MicroshotMode
+  modeName: Microshot
+  duration: 0
+  spawnerPosition: {x: 0, y: 2.6, z: 7}
+  spawnBox: {x: 1.2, y: 0.8, z: 0}
+  targetScale: 0.3

@@ -3,12 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    private const float InchesPerCentimeter = 1f / 2.54f;
+    private const float YawPerCount = 0.022f;
 
     [SerializeField] private Transform body;
     [SerializeField] private Camera playerCamera;
-    [SerializeField, Min(1f)] private float sensCm360 = 50f;
-    [SerializeField, Min(100)] private int dpi = 800;
+    [SerializeField, Range(0.1f, 10f)] private float sensitivity = 1f;
     [SerializeField, Range(60f, 120f)] private float fov = 90f;
     [SerializeField] private bool smoothingEnabled = false;
     [SerializeField, Range(1, 5)] private int smoothingFrames = 2;
@@ -22,6 +21,8 @@ public class PlayerLook : MonoBehaviour
     {
         if (body == null) body = transform;
         if (playerCamera == null) playerCamera = GetComponentInChildren<Camera>();
+        sensitivity = GameplaySettings.Sensitivity;
+        fov = GameplaySettings.Fov;
         ApplyCameraSettings();
     }
 
@@ -44,8 +45,7 @@ public class PlayerLook : MonoBehaviour
 
     private void OnValidate()
     {
-        sensCm360 = Mathf.Max(1f, sensCm360);
-        dpi = Mathf.Max(100, dpi);
+        sensitivity = Mathf.Clamp(sensitivity, 0.1f, 10f);
         ApplyCameraSettings();
     }
 
@@ -64,7 +64,7 @@ public class PlayerLook : MonoBehaviour
             _smoothedDelta = delta;
         }
 
-        float degPerCount = CalculateDegreesPerCount(sensCm360, dpi);
+        float degPerCount = YawPerCount * sensitivity;
         float yaw = delta.x * degPerCount;
         float pitchDelta = delta.y * degPerCount;
 
@@ -74,9 +74,9 @@ public class PlayerLook : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
     }
 
-    public void SetSensitivity(float cm360)
+    public void SetSensitivity(float sens)
     {
-        sensCm360 = Mathf.Max(1f, cm360);
+        sensitivity = Mathf.Clamp(sens, 0.1f, 10f);
     }
 
     public void SetFov(float verticalFov)
@@ -90,12 +90,6 @@ public class PlayerLook : MonoBehaviour
         smoothingEnabled = enabled;
         smoothingFrames = Mathf.Clamp(frames, 1, 5);
         _smoothedDelta = Vector2.zero;
-    }
-
-    public static float CalculateDegreesPerCount(float cm360, int mouseDpi)
-    {
-        float countsPer360 = Mathf.Max(1f, cm360) * InchesPerCentimeter * Mathf.Max(100, mouseDpi);
-        return 360f / countsPer360;
     }
 
     private void ApplyCameraSettings()

@@ -11,6 +11,7 @@ public class TargetSpawner : MonoBehaviour
 
     private readonly List<Target> _liveTargets = new List<Target>();
     private Coroutine _pendingSpawn;
+    private float _spawnScale = 1f;
 
     private bool _useGrid;
     private int _gridCols = 4;
@@ -20,6 +21,8 @@ public class TargetSpawner : MonoBehaviour
     private int _lastKilledSlot = -1;
 
     public IReadOnlyList<Target> LiveTargets => _liveTargets;
+
+    public void SetTargetScale(float scale) => _spawnScale = scale;
 
     public void SetSpawnBox(Vector3 size, float minDist = -1f)
     {
@@ -59,6 +62,8 @@ public class TargetSpawner : MonoBehaviour
 
         Vector3 position = _useGrid ? PickGridPosition() : PickRandomPosition();
         GameObject targetObject = Instantiate(targetPrefab, position, Quaternion.identity, transform);
+        if (_spawnScale != 1f)
+            targetObject.transform.localScale = targetPrefab.transform.localScale * _spawnScale;
         Target target = targetObject.GetComponent<Target>();
         if (target == null)
         {
@@ -68,6 +73,17 @@ public class TargetSpawner : MonoBehaviour
         }
 
         _liveTargets.Add(target);
+        return target;
+    }
+
+    public Target SpawnAt(Vector3 worldPosition)
+    {
+        if (targetPrefab == null) return null;
+        var go = Instantiate(targetPrefab, worldPosition, Quaternion.identity, transform);
+        if (_spawnScale != 1f)
+            go.transform.localScale = targetPrefab.transform.localScale * _spawnScale;
+        var target = go.GetComponent<Target>();
+        if (target != null) _liveTargets.Add(target);
         return target;
     }
 

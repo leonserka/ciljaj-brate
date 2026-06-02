@@ -80,6 +80,25 @@ public class StatsManager : MonoBehaviour
         Publish();
     }
 
+    public void RecordTrackingFrame(bool onTarget, float deltaTime)
+    {
+        _shotsFired++;
+        _lastShotHit = onTarget;
+        if (onTarget)
+        {
+            _hits++;
+            _combo++;
+            if (_combo > _bestCombo) _bestCombo = _combo;
+            _score += 150f * deltaTime;
+        }
+        else
+        {
+            _misses++;
+            _combo = 0;
+        }
+        Publish();
+    }
+
     private void Publish()
     {
         StatsChanged?.Invoke(CurrentStats);
