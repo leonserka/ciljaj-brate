@@ -96,6 +96,9 @@ public class PrefireManager : MonoBehaviour
 
         _playerHealth?.ResetHealth();
 
+        var weapon = _playerTransform.GetComponentInChildren<PrefireWeapon>();
+        if (weapon != null) weapon.ResetAmmo();
+
         for (int i = 0; i < route.BotCount; i++)
         {
             var bot = Instantiate(botPrefab, route.GetBotPosition(i), route.GetBotRotation(i));

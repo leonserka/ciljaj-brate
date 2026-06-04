@@ -3,13 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Ciljaj Brate/Modes/Strafetrack", fileName = "StrafetrackMode")]
 public class StrafetrackMode : GameModeSO
 {
+    [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Vector3 spawnPosition = new Vector3(0f, 2.6f, 7f);
     [SerializeField] private float targetRadius = 0.5f;
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float boundsX = 4f;
     [SerializeField] private float boundsY = 1.5f;
-
-    private static readonly Color TargetColor = new Color(0.604f, 0f, 0.298f);
 
     [System.NonSerialized] private TrackingTarget _target;
 
@@ -18,16 +17,15 @@ public class StrafetrackMode : GameModeSO
         manager.ResetSession();
         manager.ClearTargets();
 
-        var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        var go = targetPrefab != null
+            ? Instantiate(targetPrefab, spawnPosition, Quaternion.identity)
+            : GameObject.CreatePrimitive(PrimitiveType.Sphere);
         go.name = "TrackingTarget";
         go.transform.position = spawnPosition;
         go.transform.localScale = Vector3.one * targetRadius * 2f;
 
-        var renderer = go.GetComponent<Renderer>();
-        renderer.material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        renderer.material.SetColor("_BaseColor", TargetColor);
-
-        _target = go.AddComponent<TrackingTarget>();
+        _target = go.GetComponent<TrackingTarget>();
+        if (_target == null) _target = go.AddComponent<TrackingTarget>();
         _target.Init(moveSpeed, boundsX, boundsY);
     }
 

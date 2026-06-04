@@ -17,7 +17,7 @@ public class ShootableModeButton : MonoBehaviour, IShootable
         _bgRenderer = GetComponentInChildren<Renderer>();
     }
 
-    public void OnShot(RaycastHit hit, Vector3 fromDirection)
+    public void OnShot(RaycastHit hit, Vector3 fromDirection, int damage = 0)
     {
         if (_mode == null) return;
 

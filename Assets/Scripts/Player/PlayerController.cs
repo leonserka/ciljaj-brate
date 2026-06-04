@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip[] footstepClips;
     [SerializeField] private AudioClip jumpLaunchClip;
     [SerializeField] private AudioClip jumpLandClip;
+    [SerializeField] private AudioClip[] jumpLandClips;
     [SerializeField] private float footstepInterval = 0.35f;
     [SerializeField] private float footstepVolume = 0.2f;
 
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private float _footstepTimer;
     private bool _wasGrounded;
     private Vector3 _airVelocity;
+
+    public float CameraHeight => _cameraTransform != null ? _cameraTransform.localPosition.y : _standCamY;
 
     private void Awake()
     {
@@ -102,8 +105,13 @@ public class PlayerController : MonoBehaviour
                 _audioSource.PlayOneShot(jumpLaunchClip, footstepVolume);
         }
 
-        if (grounded && !_wasGrounded && jumpLandClip != null)
-            _audioSource.PlayOneShot(jumpLandClip, footstepVolume);
+        if (grounded && !_wasGrounded)
+        {
+            if (jumpLandClips != null && jumpLandClips.Length > 0)
+                _audioSource.PlayOneShot(jumpLandClips[Random.Range(0, jumpLandClips.Length)], footstepVolume);
+            else if (jumpLandClip != null)
+                _audioSource.PlayOneShot(jumpLandClip, footstepVolume);
+        }
         _wasGrounded = grounded;
 
         _verticalVelocity += gravity * Time.deltaTime;

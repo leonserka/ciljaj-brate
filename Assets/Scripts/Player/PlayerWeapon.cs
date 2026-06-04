@@ -59,7 +59,14 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (_fireAction != null && _fireAction.WasPressedThisFrame()) TryFire();
+        bool fire = _fireAction != null && _fireAction.WasPressedThisFrame();
+        if (!fire)
+        {
+            var kb = Keyboard.current;
+            if (kb != null && (kb.zKey.wasPressedThisFrame || kb.xKey.wasPressedThisFrame))
+                fire = true;
+        }
+        if (fire) TryFire();
     }
 
     private void TryFire()
@@ -87,22 +94,4 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     public static Vector3 LastShotPoint { get; private set; }
-
-    private static AudioClip GenerateShotClip()
-    {
-        const int sampleRate = 44100;
-        const int sampleCount = 2205;
-        float[] samples = new float[sampleCount];
-        for (int i = 0; i < sampleCount; i++)
-        {
-            float t = (float)i / sampleCount;
-            float envelope = Mathf.Exp(-t * 14f);
-            float noise = (Random.value * 2f - 1f) * 0.6f;
-            float pulse = Mathf.Sin(t * 60f) * 0.35f;
-            samples[i] = Mathf.Clamp((noise + pulse) * envelope, -1f, 1f);
-        }
-        AudioClip clip = AudioClip.Create("ProceduralShot", sampleCount, 1, sampleRate, false);
-        clip.SetData(samples, 0);
-        return clip;
-    }
 }

@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
     private bool _open;
 
     private PlayerLook _look;
-    private PlayerWeapon _weapon;
+    private MonoBehaviour _weapon;
     private PlayerController _controller;
     private bool _weaponWas, _controllerWas;
 
@@ -93,7 +93,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
 
         _look = FindAnyObjectByType<PlayerLook>();
-        _weapon = FindAnyObjectByType<PlayerWeapon>();
+        _weapon = FindAnyObjectByType<PrefireWeapon>() as MonoBehaviour
+              ?? FindAnyObjectByType<PlayerWeapon>();
         _controller = FindAnyObjectByType<PlayerController>();
 
         if (_look != null) _look.enabled = false;

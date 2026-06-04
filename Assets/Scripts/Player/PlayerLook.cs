@@ -85,6 +85,14 @@ public class PlayerLook : MonoBehaviour
         ApplyCameraSettings();
     }
 
+    public void ApplyRecoilPunch(float pitchDelta, float yawDelta)
+    {
+        _pitch = Mathf.Clamp(_pitch + pitchDelta, -89f, 89f);
+        body.Rotate(0f, yawDelta, 0f, Space.World);
+        if (playerCamera != null)
+            playerCamera.transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
+    }
+
     public void SetSmoothing(bool enabled, int frames)
     {
         smoothingEnabled = enabled;
