@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
     private PlayerController _controller;
     private bool _weaponWas, _controllerWas;
 
-    // crosshair widgets
+
     private Sprite[] _sprites;
     private int _selectedIndex;
     private Color _selectedColor;
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour
     private CrosshairApplier _applier;
     private Slider _redSlider, _greenSlider, _blueSlider, _sizeSlider;
 
-    // settings tabs
+
     private GameObject _crosshairContent;
     private GameObject _gameplayContent;
     private Image _sidebarCrosshairImg;
@@ -48,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     private TMP_Text _sidebarCrosshairText;
     private TMP_Text _sidebarGameplayText;
 
-    // gameplay widgets
+
     private Slider _sensSlider, _fovSlider;
     private Toggle _viewmodelToggle;
     private TMP_Text _sensValue, _fovValue;
@@ -74,7 +74,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------------- open/close
+
 
     private void Toggle()
     {
@@ -123,7 +123,7 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(mainMenuScene);
     }
 
-    // ---------------------------------------------------------------- views
+
 
     private void ShowRoot()
     {
@@ -169,7 +169,7 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    // ---------------------------------------------------------------- UI build
+
 
     private void EnsureEventSystem()
     {
@@ -202,7 +202,7 @@ public class PauseMenu : MonoBehaviour
         BuildRouteView(_root.transform);
     }
 
-    // ---------------------------------------------------------------- root view
+
 
     private void BuildRootView(Transform parent)
     {
@@ -256,7 +256,7 @@ public class PauseMenu : MonoBehaviour
 
     }
 
-    // ---------------------------------------------------------------- settings view (tabbed)
+
 
     private void BuildSettingsView(Transform parent)
     {
@@ -269,7 +269,7 @@ public class PauseMenu : MonoBehaviour
         pr.sizeDelta = new Vector2(1200, 700);
         panel.GetComponent<Image>().color = PanelBG;
 
-        // Back button
+
         var back = MakeButton("BackBtn", panel.transform, "BACK", new Color(0.2f, 0.2f, 0.22f, 0.8f));
         var backR = back.GetComponent<RectTransform>();
         backR.anchorMin = backR.anchorMax = new Vector2(1, 1);
@@ -278,7 +278,7 @@ public class PauseMenu : MonoBehaviour
         backR.anchoredPosition = new Vector2(-24, -22);
         back.onClick.AddListener(ShowRoot);
 
-        // Sidebar (left)
+
         var sidebar = new GameObject("Sidebar", typeof(RectTransform), typeof(Image));
         sidebar.transform.SetParent(panel.transform, false);
         var sbRT = sidebar.GetComponent<RectTransform>();
@@ -289,7 +289,7 @@ public class PauseMenu : MonoBehaviour
         sbRT.anchoredPosition = Vector2.zero;
         sidebar.GetComponent<Image>().color = SidebarBG;
 
-        // Sidebar title
+
         var sbTitle = MakeText("SBTitle", sidebar.transform, "SETTINGS", 22, FontStyles.Bold, TextAlignmentOptions.Left);
         var stRT = sbTitle.rectTransform;
         stRT.anchorMin = new Vector2(0, 1); stRT.anchorMax = new Vector2(1, 1);
@@ -298,7 +298,7 @@ public class PauseMenu : MonoBehaviour
         stRT.offsetMin = new Vector2(20, stRT.offsetMin.y);
         sbTitle.color = Color.white;
 
-        // Sidebar items
+
         float itemY = -60f;
         MakeSidebarItem(sidebar.transform, "CROSSHAIR", itemY, true, out _sidebarCrosshairImg, out _sidebarCrosshairText,
             () => ShowSettingsTab(true));
@@ -306,7 +306,7 @@ public class PauseMenu : MonoBehaviour
         MakeSidebarItem(sidebar.transform, "GAMEPLAY", itemY, false, out _sidebarGameplayImg, out _sidebarGameplayText,
             () => ShowSettingsTab(false));
 
-        // Content area (right of sidebar)
+
         var contentArea = new GameObject("ContentArea", typeof(RectTransform));
         contentArea.transform.SetParent(panel.transform, false);
         var caRT = contentArea.GetComponent<RectTransform>();
@@ -348,7 +348,7 @@ public class PauseMenu : MonoBehaviour
         tRT.anchorMin = Vector2.zero; tRT.anchorMax = Vector2.one;
         tRT.offsetMin = new Vector2(20, 0); tRT.offsetMax = Vector2.zero;
 
-        // Active indicator bar on the left
+
         if (active)
         {
             var ind = new GameObject("ActiveBar", typeof(RectTransform), typeof(Image));
@@ -393,7 +393,7 @@ public class PauseMenu : MonoBehaviour
             SyncGameplayWidgets();
     }
 
-    // ---------------------------------------------------------------- crosshair content
+
 
     private void BuildCrosshairContent(Transform parent)
     {
@@ -401,7 +401,7 @@ public class PauseMenu : MonoBehaviour
         _crosshairContent.transform.SetParent(parent, false);
         Stretch(_crosshairContent.GetComponent<RectTransform>());
 
-        // Title
+
         var title = MakeText("Title", _crosshairContent.transform, "CROSSHAIR", 32, FontStyles.Bold, TextAlignmentOptions.Left);
         var tr = title.rectTransform;
         tr.anchorMin = new Vector2(0, 1); tr.anchorMax = new Vector2(1, 1);
@@ -592,7 +592,7 @@ public class PauseMenu : MonoBehaviour
         if (_applier != null) _applier.Apply();
     }
 
-    // ---------------------------------------------------------------- gameplay content
+
 
     private void BuildGameplayContent(Transform parent)
     {
@@ -648,8 +648,8 @@ public class PauseMenu : MonoBehaviour
             _viewmodelToggle.onValueChanged.AddListener(v =>
             {
                 GameplaySettings.ShowViewmodel = v;
-                // The viewmodel mesh isn't a child of the weapon script's object,
-                // so let the weapon resolve and toggle its own viewmodel root.
+
+
                 if (_weapon is PlayerWeapon pw)
                     pw.SetViewmodelVisible(v);
             });
@@ -799,7 +799,7 @@ public class PauseMenu : MonoBehaviour
         toggle.isOn = initial;
     }
 
-    // ---------------------------------------------------------------- mode view
+
 
     private struct ModeEntry { public string label; public string modeName; }
 
@@ -888,7 +888,7 @@ public class PauseMenu : MonoBehaviour
         return AimModeSelection.IsSelected(modeName);
     }
 
-    // ---------------------------------------------------------------- route selector
+
 
     private static readonly Color RouteCherryAccent = new Color(0.45f, 0.04f, 0.16f);
     private static readonly Color RouteCardBG = new Color(0.12f, 0.12f, 0.14f, 1f);
@@ -1093,7 +1093,7 @@ public class PauseMenu : MonoBehaviour
         Resume();
     }
 
-    // ---------------------------------------------------------------- helpers
+
 
     private static GameObject MakeStretch(string name, Transform parent)
     {

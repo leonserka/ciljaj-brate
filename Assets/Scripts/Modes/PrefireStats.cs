@@ -9,7 +9,7 @@ public class PrefireRouteResult
 
     public float Accuracy => ShotsFired > 0 ? (float)ShotsHit / ShotsFired : 0f;
 
-    // Score 0-1000: 70% from accuracy, 30% from speed (full bonus under 120s, zero at 120s+)
+
     public int Score
     {
         get

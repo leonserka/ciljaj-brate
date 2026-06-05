@@ -28,8 +28,8 @@ public class PlayerWeapon : MonoBehaviour
         SetViewmodelVisible(GameplaySettings.ShowViewmodel);
     }
 
-    // Shows/hides the arms + gun viewmodel. Called from Awake and from the
-    // settings toggle (PauseMenu) so the "show weapon viewmodel" option works.
+
+
     public void SetViewmodelVisible(bool show)
     {
         var root = ResolveViewmodelRoot();
@@ -45,8 +45,8 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (viewmodelRoot != null) return viewmodelRoot;
 
-        // The viewmodel mesh is typically a sibling of this object (both parented
-        // to the camera). Pick the sibling that actually carries renderers.
+
+
         Transform parent = transform.parent;
         if (parent != null)
         {
@@ -97,7 +97,7 @@ public class PlayerWeapon : MonoBehaviour
         if (Time.time < _nextShotTime) return;
         _nextShotTime = Time.time + 60f / fireRateRpm;
 
-        // When the viewmodel is hidden, the weapon is meant to be "gone" — mute its fire sound too.
+
         if (_audio != null && shotClip != null && GameplaySettings.ShowViewmodel)
             _audio.PlayOneShot(shotClip, shotVolume);
         weaponAnimator?.SetTrigger("Fire");

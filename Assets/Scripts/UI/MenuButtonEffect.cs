@@ -11,7 +11,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private float speed = 12f;
     [SerializeField] private bool textMode;
     public float hoverVolume = 1f;
-    // Extra gain on the UI hover/click sounds so they sit a bit louder over the music.
+
     private const float SfxBoost = 1.8f;
 
     private Vector3 _baseScale;
@@ -53,7 +53,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 _sharedSource = go.GetComponent<AudioSource>();
         }
 
-        // Auto-detect text mode
+
         var img = GetComponent<Image>();
         if (img != null && img.color.a < 0.01f)
             textMode = true;

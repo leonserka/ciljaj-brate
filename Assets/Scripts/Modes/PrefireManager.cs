@@ -87,7 +87,7 @@ public class PrefireManager : MonoBehaviour
         LoadRoute(index);
     }
 
-    // Called by the route-complete popup's Continue button.
+
     public void ContinueAfterClear()
     {
         if (!_waitingForContinue) return;
@@ -106,7 +106,7 @@ public class PrefireManager : MonoBehaviour
         }
     }
 
-    // Called by PrefireWeapon on every trigger pull.
+
     public void RegisterShot(bool hit)
     {
         if (!RouteActive) return;
@@ -198,7 +198,7 @@ public class PrefireManager : MonoBehaviour
             ShotsHit = _currentShotsHit,
         };
 
-        // Keep best (highest score) result per route index.
+
         while (_results.Count <= CurrentRouteIndex) _results.Add(null);
         if (_results[CurrentRouteIndex] == null || result.Score > _results[CurrentRouteIndex].Score)
             _results[CurrentRouteIndex] = result;

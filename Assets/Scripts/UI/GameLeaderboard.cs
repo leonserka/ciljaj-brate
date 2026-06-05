@@ -29,6 +29,9 @@ public class GameLeaderboard : MonoBehaviour
     private bool _isPrefire;
     private GameObject _panel;
     private Transform _listContent;
+    private bool _initialized;
+    private PrefireManager _prefireManager;
+    private RoundController _roundController;
 
     private struct RoundEntry
     {
@@ -45,29 +48,50 @@ public class GameLeaderboard : MonoBehaviour
         string scene = SceneManager.GetActiveScene().name;
         _isPrefire = scene == "Prefire";
         BuildUI();
+        TryInitialize();
+    }
 
+    private void Update()
+    {
+        if (!_initialized)
+        {
+            TryInitialize();
+        }
+    }
+
+    private void TryInitialize()
+    {
         if (_isPrefire)
         {
             var pm = PrefireManager.Instance;
+            if (pm == null) pm = FindAnyObjectByType<PrefireManager>();
             if (pm != null)
             {
-                pm.RouteCleared += OnRouteCleared;
+                _prefireManager = pm;
+                _prefireManager.RouteCleared += OnRouteCleared;
                 RefreshFromPrefire();
+                _initialized = true;
             }
         }
         else
         {
             var rc = RoundController.Instance;
-            if (rc != null) rc.RoundEnded += OnRoundEnded;
+            if (rc == null) rc = FindAnyObjectByType<RoundController>();
+            if (rc != null)
+            {
+                _roundController = rc;
+                _roundController.RoundEnded += OnRoundEnded;
+                _initialized = true;
+            }
         }
     }
 
     private void OnDestroy()
     {
-        if (_isPrefire && PrefireManager.Instance != null)
-            PrefireManager.Instance.RouteCleared -= OnRouteCleared;
-        if (!_isPrefire && RoundController.Instance != null)
-            RoundController.Instance.RoundEnded -= OnRoundEnded;
+        if (_isPrefire && _prefireManager != null)
+            _prefireManager.RouteCleared -= OnRouteCleared;
+        if (!_isPrefire && _roundController != null)
+            _roundController.RoundEnded -= OnRoundEnded;
     }
 
     private void OnRouteCleared(PrefireRouteResult result) => RefreshFromPrefire();

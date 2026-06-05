@@ -47,8 +47,8 @@ public class SpidershotMode : GameModeSO
         if (_nextIsCenter)
         {
             manager.Spawner.SetTargetScale(centerScale);
-            // Centered horizontally, but vary the depth so the player has to
-            // re-acquire distance as well as position.
+
+
             Vector3 p = manager.Spawner.transform.position;
             p.z += Random.Range(-outerSpawnBox.z * 0.5f, outerSpawnBox.z * 0.5f);
             manager.SpawnTargetAt(p);

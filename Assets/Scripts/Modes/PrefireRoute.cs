@@ -18,9 +18,9 @@ public class PrefireRoute : MonoBehaviour
     public Vector3 GetBotPosition(int index) => MarkerOf(ResolvedBots[index]).position;
     public Quaternion GetBotRotation(int index) => MarkerOf(ResolvedBots[index]).rotation;
 
-    // The visible preview model ("Placeholder") is what the level designer drags
-    // onto the map; the "Bot" parent transform may sit elsewhere. Spawn the real
-    // bot where the marker actually is, not at the parent's position.
+
+
+
     private static Transform MarkerOf(Transform bot)
     {
         var marker = bot.Find("Placeholder");
@@ -57,19 +57,11 @@ public class PrefireRoute : MonoBehaviour
     {
         foreach (var r in GetComponentsInChildren<Renderer>(true))
             r.enabled = false;
-        // Markers are design-time preview bots with their own Target + Collider.
-        // Their colliders must be disabled during play, otherwise the player's
-        // raycast can hit an invisible marker instead of the spawned bot,
-        // playing hit/kill sounds while no visible bot takes damage.
+
+
+
+
         foreach (var c in GetComponentsInChildren<Collider>(true))
             c.enabled = false;
-    }
-
-    public void ShowMarkers()
-    {
-        foreach (var r in GetComponentsInChildren<Renderer>(true))
-            r.enabled = true;
-        foreach (var c in GetComponentsInChildren<Collider>(true))
-            c.enabled = true;
     }
 }

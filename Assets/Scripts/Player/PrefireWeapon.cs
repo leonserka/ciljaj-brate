@@ -104,7 +104,7 @@ public class PrefireWeapon : MonoBehaviour
         }
     }
 
-    // Kept for PrefireManager route resets — clears recoil/spray state.
+
     public void ResetAmmo()
     {
         _sprayIndex = 0;
@@ -160,8 +160,8 @@ public class PrefireWeapon : MonoBehaviour
 
         if (playerCamera == null) return;
         var camT = playerCamera.transform;
-        // Capture shot direction BEFORE applying recoil so the bullet goes where
-        // the crosshair was at the moment of pulling the trigger.
+
+
         Vector3 forward = camT.forward;
         Vector3 right = camT.right;
         Vector3 up = camT.up;
@@ -228,9 +228,9 @@ public class PrefireWeapon : MonoBehaviour
 
     private bool CheckHeadshot(RaycastHit hit, Transform botTransform)
     {
-        // Headshot is decided by which collider the bullet actually struck.
-        // The bot has a dedicated "Head" SphereCollider; everything else
-        // (the body CapsuleCollider) is a body shot. No height guessing.
+
+
+
         return hit.collider != null && hit.collider.gameObject.name == "Head";
     }
 
@@ -311,8 +311,8 @@ public class PrefireWeapon : MonoBehaviour
 
         var lr = go.AddComponent<LineRenderer>();
         lr.material = _tracerMat;
-        // Width is in world units; a near point ~1m from the camera needs a few
-        // mm to read as a thin-but-visible line instead of a sub-pixel sliver.
+
+
         lr.startWidth = 0.004f;
         lr.endWidth = 0.004f;
         lr.numCapVertices = 1;

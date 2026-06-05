@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScorePopupFloat : MonoBehaviour
 {
-    private float _riseSpeed;   // world units / sec
+    private float _riseSpeed;
     private float _lifetime;
     private float _fadeDelay;
     private float _elapsed;
@@ -33,7 +33,7 @@ public class ScorePopupFloat : MonoBehaviour
     {
         _elapsed += Time.deltaTime;
 
-        // Rise in world space so the popup stays anchored to the spot it appeared
+
         _worldPos += Vector3.up * _riseSpeed * Time.deltaTime;
 
         if (_cam != null && _parentRect != null)
@@ -41,7 +41,7 @@ public class ScorePopupFloat : MonoBehaviour
             Vector3 sp = _cam.WorldToScreenPoint(_worldPos);
             if (sp.z <= 0f)
             {
-                // behind camera - hide
+
                 if (_text != null) { var cc = _text.color; cc.a = 0f; _text.color = cc; }
             }
             else

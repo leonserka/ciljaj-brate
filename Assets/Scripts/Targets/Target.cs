@@ -13,7 +13,6 @@ public class Target : MonoBehaviour, IShootable
     private int _health;
     private bool _dead;
 
-    public int HitCount => _hitCount;
     public int Health => _health;
     public bool IsDead => _dead;
     public string LastHitLabel { get; set; }

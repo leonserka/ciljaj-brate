@@ -20,8 +20,6 @@ public class TargetSpawner : MonoBehaviour
     private readonly HashSet<int> _occupiedSlots = new HashSet<int>();
     private int _lastKilledSlot = -1;
 
-    public IReadOnlyList<Target> LiveTargets => _liveTargets;
-
     public void SetTargetScale(float scale) => _spawnScale = scale;
 
     public void SetSpawnBox(Vector3 size, float minDist = -1f)

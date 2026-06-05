@@ -66,7 +66,7 @@ public class GameModeSelector : MonoBehaviour
 
     private void CreateCard(ModeInfo mode)
     {
-        // Card root
+
         var card = new GameObject(mode.title, typeof(RectTransform));
         card.transform.SetParent(cardContainer, false);
 
@@ -87,7 +87,7 @@ public class GameModeSelector : MonoBehaviour
         layout.padding = new RectOffset(0, 0, 0, 0);
         layout.spacing = 0;
 
-        // Thumbnail area (placeholder for future image)
+
         var thumb = new GameObject("Thumbnail", typeof(RectTransform));
         thumb.transform.SetParent(card.transform, false);
         thumb.AddComponent<LayoutElement>().flexibleHeight = 1;
@@ -98,7 +98,7 @@ public class GameModeSelector : MonoBehaviour
         Sprite thumbSprite = string.IsNullOrEmpty(mode.thumbnail) ? null : Resources.Load<Sprite>(mode.thumbnail);
         if (thumbSprite != null)
         {
-            // Image lives in a child that fills the box, so its native size never drives the card layout.
+
             var imgGO = new GameObject("Image", typeof(RectTransform));
             imgGO.transform.SetParent(thumb.transform, false);
             var imgRect = imgGO.GetComponent<RectTransform>();
@@ -108,15 +108,15 @@ public class GameModeSelector : MonoBehaviour
             imgRect.offsetMax = Vector2.zero;
             var img = imgGO.AddComponent<Image>();
             img.sprite = thumbSprite;
-            // Stretch to fill the thumbnail box completely; the card's Mask clips
-            // any overflow so the image never spills outside its area.
+
+
             img.type = Image.Type.Simple;
             img.preserveAspect = false;
             img.raycastTarget = false;
         }
         else
         {
-            // Icon hint placeholder when no thumbnail is available
+
             var iconGO = new GameObject("Icon", typeof(RectTransform));
             iconGO.transform.SetParent(thumb.transform, false);
             var iconRect = iconGO.GetComponent<RectTransform>();
@@ -130,12 +130,12 @@ public class GameModeSelector : MonoBehaviour
             iconTMP.alignment = TextAlignmentOptions.Center;
         }
 
-        // Info section (title + category + description)
+
         var info = new GameObject("Info", typeof(RectTransform));
         info.transform.SetParent(card.transform, false);
         info.AddComponent<LayoutElement>().preferredHeight = 100;
 
-        // Title
+
         var titleGO = new GameObject("Title", typeof(RectTransform));
         titleGO.transform.SetParent(info.transform, false);
         var titleRect = titleGO.GetComponent<RectTransform>();
@@ -150,7 +150,7 @@ public class GameModeSelector : MonoBehaviour
         titleTMP.color = Color.white;
         titleTMP.fontStyle = FontStyles.Bold;
 
-        // Category
+
         var catGO = new GameObject("Category", typeof(RectTransform));
         catGO.transform.SetParent(info.transform, false);
         var catRect = catGO.GetComponent<RectTransform>();
@@ -165,7 +165,7 @@ public class GameModeSelector : MonoBehaviour
         catTMP.color = Cherry;
         catTMP.fontStyle = FontStyles.Bold;
 
-        // Description
+
         var descGO = new GameObject("Desc", typeof(RectTransform));
         descGO.transform.SetParent(info.transform, false);
         var descRect = descGO.GetComponent<RectTransform>();
@@ -180,7 +180,7 @@ public class GameModeSelector : MonoBehaviour
         descTMP.color = new Color(1f, 1f, 1f, 0.4f);
         descTMP.textWrappingMode = TextWrappingModes.Normal;
 
-        // Play button
+
         var playGO = new GameObject("PlayBtn", typeof(RectTransform));
         playGO.transform.SetParent(card.transform, false);
         playGO.AddComponent<LayoutElement>().preferredHeight = 36;
@@ -206,7 +206,7 @@ public class GameModeSelector : MonoBehaviour
         playTMP.alignment = TextAlignmentOptions.Center;
         playTMP.fontStyle = FontStyles.Bold;
 
-        // Card hover
+
         var hover = card.AddComponent<CardHoverEffect>();
         hover.Init(cardImg, outline);
 

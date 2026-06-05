@@ -93,13 +93,6 @@ public class PlayerLook : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
     }
 
-    public void SetSmoothing(bool enabled, int frames)
-    {
-        smoothingEnabled = enabled;
-        smoothingFrames = Mathf.Clamp(frames, 1, 5);
-        _smoothedDelta = Vector2.zero;
-    }
-
     private void ApplyCameraSettings()
     {
         if (playerCamera != null)

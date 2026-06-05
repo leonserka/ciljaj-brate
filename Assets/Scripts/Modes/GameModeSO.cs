@@ -3,10 +3,8 @@ using UnityEngine;
 public abstract class GameModeSO : ScriptableObject
 {
     [SerializeField] private string modeName = "Game Mode";
-    [SerializeField] private float duration;
 
     public string ModeName => modeName;
-    public float Duration => duration;
 
     public virtual bool ShowHitFeedback => true;
     public virtual bool AllowShooting => true;

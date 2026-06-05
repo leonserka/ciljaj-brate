@@ -23,7 +23,7 @@ public class PrefireHUD : MonoBehaviour
     private float _displayHealth;
     private float _flashAlpha;
 
-    // route-complete popup
+
     private GameObject _cardRoot;
     private TMP_Text _cardTitle;
     private TMP_Text _cardTime;
@@ -33,7 +33,7 @@ public class PrefireHUD : MonoBehaviour
     private PlayerLook _look;
     private PlayerController _playerController;
 
-    // top HUD (matching AimTraining style)
+
     private TMP_Text _hudScore;
     private TMP_Text _hudTimer;
     private TMP_Text _hudAccuracy;
@@ -42,7 +42,7 @@ public class PrefireHUD : MonoBehaviour
     private Vector3 _scoreBaseScale;
     private float _scorePunch;
 
-    // bot alive count (from old prefab)
+
     private TMP_Text _botsText;
 
     private void Start()
@@ -159,7 +159,7 @@ public class PrefireHUD : MonoBehaviour
         return t > 0.3f ? Color.white : new Color(0.9f, 0.2f, 0.15f);
     }
 
-    // ---------------------------------------------------------------- top HUD (AimTraining style)
+
 
     private void BuildTopHUD()
     {
@@ -173,7 +173,7 @@ public class PrefireHUD : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.matchWidthOrHeight = 0.5f;
 
-        // TopHUD container — matches AimTraining: 640×62, anchored top-center y=-25
+
         var topHud = new GameObject("TopHUD", typeof(RectTransform));
         topHud.transform.SetParent(canvasGO.transform, false);
         var thRT = topHud.GetComponent<RectTransform>();
@@ -182,7 +182,7 @@ public class PrefireHUD : MonoBehaviour
         thRT.sizeDelta = new Vector2(640, 62);
         thRT.anchoredPosition = new Vector2(0, -25);
 
-        // --- ScorePanel (left 0–30%) ---
+
         var scorePanel = MakePanel("ScorePanel", topHud.transform,
             new Vector2(0, 0), new Vector2(0.3f, 1), new Vector3(1, 1.2f, 1));
 
@@ -191,7 +191,7 @@ public class PrefireHUD : MonoBehaviour
         _hudScore = MakePanelValue("ScoreText", scorePanel.transform, "0");
         _scoreBaseScale = _hudScore.transform.localScale;
 
-        // --- TimerPanel (center 32–68%) ---
+
         var timerPanel = MakePanel("TimerPanel", topHud.transform,
             new Vector2(0.32f, 0), new Vector2(0.68f, 1), new Vector3(1.2f, 1.56f, 1.2f));
         timerPanel.GetComponent<Image>().color = new Color(1, 1, 1, 0.92f);
@@ -205,7 +205,7 @@ public class PrefireHUD : MonoBehaviour
         tmRT.anchoredPosition = new Vector2(1, -1.2f);
         tmRT.sizeDelta = new Vector2(0, -2);
 
-        // --- AccuracyPanel (right 70–100%) ---
+
         var accPanel = MakePanel("AccuracyPanel", topHud.transform,
             new Vector2(0.7f, 0), new Vector2(1, 1), new Vector3(1, 1.2f, 1));
 
@@ -267,7 +267,7 @@ public class PrefireHUD : MonoBehaviour
     {
         if (_prefireManager == null) return;
 
-        // Timer
+
         if (_hudTimer != null)
         {
             float t = _prefireManager.RouteTime;
@@ -276,14 +276,14 @@ public class PrefireHUD : MonoBehaviour
             _hudTimer.text = sec.ToString("00") + "." + ms.ToString("00");
         }
 
-        // Accuracy
+
         float accuracy = _prefireManager.CurrentAccuracy;
         float accPct = accuracy * 100f;
         _displayAccuracy = Mathf.Lerp(_displayAccuracy, accPct, 12f * Time.deltaTime);
         if (_hudAccuracy != null)
             _hudAccuracy.text = Mathf.RoundToInt(_displayAccuracy) + "%";
 
-        // Score
+
         float speedFactor = Mathf.Max(0f, 1f - _prefireManager.RouteTime / 120f);
         int score = Mathf.RoundToInt(accuracy * 700f + speedFactor * 300f);
         _displayScore = Mathf.MoveTowards(_displayScore, score,
@@ -292,14 +292,14 @@ public class PrefireHUD : MonoBehaviour
         {
             _hudScore.text = Mathf.RoundToInt(_displayScore).ToString();
 
-            // Pop animation on score change
+
             _scorePunch = Mathf.MoveTowards(_scorePunch, 0f, 8f * Time.deltaTime);
             float s = 1f + _scorePunch * 0.4f;
             _hudScore.transform.localScale = _scoreBaseScale * s;
         }
     }
 
-    // ---------------------------------------------------------------- result card
+
 
     private void BuildResultCard()
     {
@@ -313,7 +313,7 @@ public class PrefireHUD : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.matchWidthOrHeight = 0.5f;
 
-        // dim
+
         var dimGO = new GameObject("Dim", typeof(RectTransform), typeof(Image));
         dimGO.transform.SetParent(canvasGO.transform, false);
         var dimRT = dimGO.GetComponent<RectTransform>();
@@ -323,7 +323,7 @@ public class PrefireHUD : MonoBehaviour
 
         _cardRoot = dimGO;
 
-        // panel
+
         var panel = new GameObject("Panel", typeof(RectTransform), typeof(Image));
         panel.transform.SetParent(dimGO.transform, false);
         var pr = panel.GetComponent<RectTransform>();
@@ -331,7 +331,7 @@ public class PrefireHUD : MonoBehaviour
         pr.sizeDelta = new Vector2(380, 520);
         panel.GetComponent<Image>().color = PanelBG;
 
-        // cherry top bar
+
         var bar = new GameObject("Bar", typeof(RectTransform), typeof(Image));
         bar.transform.SetParent(panel.transform, false);
         var br = bar.GetComponent<RectTransform>();
@@ -339,7 +339,7 @@ public class PrefireHUD : MonoBehaviour
         br.pivot = new Vector2(0.5f, 1); br.sizeDelta = new Vector2(0, 3);
         bar.GetComponent<Image>().color = Cherry;
 
-        // route title
+
         _cardTitle = MakeText("Title", panel.transform, "ROUTE NAME", 28, FontStyles.Bold, TextAlignmentOptions.Left);
         var tRT = _cardTitle.rectTransform;
         tRT.anchorMin = new Vector2(0, 1); tRT.anchorMax = new Vector2(1, 1);
@@ -347,7 +347,7 @@ public class PrefireHUD : MonoBehaviour
         tRT.anchoredPosition = new Vector2(24, -24);
         _cardTitle.color = Color.white;
 
-        // divider
+
         var div = new GameObject("Div", typeof(RectTransform), typeof(Image));
         div.transform.SetParent(panel.transform, false);
         var dRT = div.GetComponent<RectTransform>();
@@ -356,13 +356,13 @@ public class PrefireHUD : MonoBehaviour
         dRT.anchoredPosition = new Vector2(0, -82);
         div.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.06f);
 
-        // stat rows
+
         float y = -100f;
         _cardTime = MakeStatRow(panel.transform, "TIME", ref y);
         _cardAccuracy = MakeStatRow(panel.transform, "ACCURACY", ref y);
         _cardScore = MakeStatRow(panel.transform, "SCORE", ref y);
 
-        // divider above button
+
         var div2 = new GameObject("Div2", typeof(RectTransform), typeof(Image));
         div2.transform.SetParent(panel.transform, false);
         var d2RT = div2.GetComponent<RectTransform>();
@@ -371,7 +371,7 @@ public class PrefireHUD : MonoBehaviour
         d2RT.anchoredPosition = new Vector2(0, 76);
         div2.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.06f);
 
-        // continue button
+
         var btnGO = new GameObject("ContinueBtn", typeof(RectTransform), typeof(Image));
         btnGO.transform.SetParent(panel.transform, false);
         var bRT = btnGO.GetComponent<RectTransform>();

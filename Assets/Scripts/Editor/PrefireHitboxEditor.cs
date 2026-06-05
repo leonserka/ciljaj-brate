@@ -89,7 +89,7 @@ public class PrefireHitboxEditor : EditorWindow
 
     private void DrawSceneGizmos(SceneView sv)
     {
-        // Draw on live instances if in play mode, otherwise draw at prefab origin.
+
         if (Application.isPlaying)
         {
             var bots = FindObjectsByType<PrefireBot>(FindObjectsSortMode.None);

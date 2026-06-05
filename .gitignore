@@ -122,3 +122,26 @@ InitTestScene*.unity*
 # Dev screenshots — not game assets, just captures taken while building.
 /[Aa]ssets/[Ss]creenshots/
 /[Aa]ssets/[Ss]creenshots.meta
+
+# New-style .NET solution file (auto-generated like .sln)
+*.slnx
+
+# Downloaded archives
+*.zip
+*.zip.meta
+*.rar
+*.rar.meta
+*.7z
+*.7z.meta
+
+# Reference/wallpaper videos — not game assets
+*.mp4
+*.mp4.meta
+
+# Unity template leftovers
+/[Aa]ssets/TutorialInfo/
+/[Aa]ssets/TutorialInfo.meta
+
+# Unity crash recovery scenes
+/[Aa]ssets/_Recovery/
+/[Aa]ssets/_Recovery.meta

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public readonly struct SessionStats
 {
     public SessionStats(int shotsFired, int hits, int misses, float elapsedSeconds,

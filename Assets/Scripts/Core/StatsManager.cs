@@ -25,7 +25,6 @@ public class StatsManager : MonoBehaviour
         _shotsFired, _hits, _misses, ElapsedSeconds, _lastShotHit, _score, _combo);
     public float ElapsedSeconds => _sessionRunning ? Time.time - _sessionStartTime : 0f;
     public int Combo => _combo;
-    public int BestCombo => _bestCombo;
 
     private void Awake()
     {

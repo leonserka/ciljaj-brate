@@ -8,7 +8,6 @@ public class PrefireBot : MonoBehaviour
     [SerializeField] private float firstShotDelay = 0.3f;
     [SerializeField] private int healOnDeath = 20;
     [SerializeField] private AudioClip fireClip;
-    [SerializeField] private Material tracerMaterial;
 
     private const float MuzzleForward = 0.55f;
     private const float MuzzleHeight = 0.95f;

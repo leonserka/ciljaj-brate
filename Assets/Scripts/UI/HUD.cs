@@ -83,7 +83,7 @@ public class HUD : MonoBehaviour
         _displayScore = Mathf.MoveTowards(_displayScore, _targetScore, rollSpeed * Time.deltaTime * Mathf.Max(1f, Mathf.Abs(_targetScore - _displayScore)));
         UpdateScoreText();
 
-        // Pop animation
+
         _scorePunch = Mathf.MoveTowards(_scorePunch, 0f, popSpeed * Time.deltaTime);
         float scale = 1f + _scorePunch * (popScale - 1f);
         scoreText.transform.localScale = _scoreBaseScale * scale;

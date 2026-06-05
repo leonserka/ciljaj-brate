@@ -118,7 +118,7 @@ public class SettingsMenu : MonoBehaviour
         if (sizeSlider != null) sizeSlider.onValueChanged.RemoveListener(OnSizeChanged);
     }
 
-    // ---------------------------------------------------------------- tab switching
+
 
     private void ShowCrosshairTab()
     {
@@ -159,7 +159,7 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------------- gameplay
+
 
     private void SyncGameplayWidgets()
     {
@@ -177,7 +177,7 @@ public class SettingsMenu : MonoBehaviour
             viewmodelToggle.SetIsOnWithoutNotify(GameplaySettings.ShowViewmodel);
     }
 
-    // ---------------------------------------------------------------- crosshair
+
 
     private void PopulateGrid()
     {
