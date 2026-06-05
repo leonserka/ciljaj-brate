@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Runtime::LobbyMusic
   musicClip: {fileID: 8300000, guid: 02428e8c16a563c48b493f7d01ef8f2d, type: 3}
   startupClip: {fileID: 8300000, guid: dbd89226299c0904f99ea889cda1ee10, type: 3}
-  maxVolume: 0.3
+  maxVolume: 0.2
   fadeInDuration: 5
   fadeOutDuration: 3
 --- !u!1 &238859476

@@ -28,6 +28,8 @@ public class RoundController : MonoBehaviour
     public float TimeRemaining => _roundActive ? _timeRemaining : roundDuration;
     public bool RoundActive => _roundActive;
 
+    public event System.Action<SessionStats> RoundEnded;
+
     private void Awake()
     {
         Instance = this;
@@ -75,7 +77,7 @@ public class RoundController : MonoBehaviour
         }
     }
 
-    private void ShowClickToBegin()
+    public void ShowClickToBegin()
     {
         _waitingForClick = true;
         _roundActive = false;
@@ -138,12 +140,18 @@ public class RoundController : MonoBehaviour
         modeManager?.ResetSession();
     }
 
+    public void RestartRound() => ShowClickToBegin();
+
     private void EndRound()
     {
         _roundActive = false;
         if (weapon != null) weapon.enabled = false;
         modeManager?.ClearTargets();
         SetCrosshair(false);
+
+        var sm = ModeManager.Current?.Stats;
+        var stats = sm != null ? sm.CurrentStats : default(SessionStats);
+        RoundEnded?.Invoke(stats);
 
         if (centerText != null)
         {
@@ -153,7 +161,8 @@ public class RoundController : MonoBehaviour
             centerText.color = new Color(1f, 1f, 1f, 0.8f);
         }
 
-        StartCoroutine(RestartAfterDelay());
+        if (RoundEnded == null)
+            StartCoroutine(RestartAfterDelay());
     }
 
     private IEnumerator RestartAfterDelay()

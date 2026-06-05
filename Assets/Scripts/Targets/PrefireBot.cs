@@ -1,10 +1,9 @@
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Target), typeof(AudioSource))]
 public class PrefireBot : MonoBehaviour
 {
-    [SerializeField] private int damage = 10;
+    [SerializeField] private int damage = 5;
     [SerializeField] private float fireInterval = 0.5f;
     [SerializeField] private float firstShotDelay = 0.3f;
     [SerializeField] private int healOnDeath = 20;
@@ -26,10 +25,6 @@ public class PrefireBot : MonoBehaviour
     private float _nextFireTime;
     private bool _hasSeenPlayer;
     private int _losMask;
-    private TextMeshProUGUI _healthText;
-    private Transform _healthCanvas;
-    private int _prevHealth;
-    private float _hitLabelTimer;
 
     private void Awake()
     {
@@ -50,9 +45,6 @@ public class PrefireBot : MonoBehaviour
 
         _losMask = ~((1 << gameObject.layer) | (1 << LayerMask.NameToLayer("Player")));
         _nextFireTime = Time.time + Random.Range(0f, fireInterval);
-
-        _prevHealth = _target.Health;
-        CreateHealthDisplay();
     }
 
     private void Update()
@@ -150,67 +142,6 @@ public class PrefireBot : MonoBehaviour
         return !Physics.Raycast(playerCenter, toBot.normalized, toBot.magnitude, _losMask, QueryTriggerInteraction.Ignore);
     }
 
-    private void LateUpdate()
-    {
-        if (_healthCanvas == null) return;
-        var cam = Camera.main;
-        if (cam == null) return;
-        _healthCanvas.LookAt(_healthCanvas.position + cam.transform.forward);
-
-        int hp = _target.Health;
-        if (hp != _prevHealth)
-        {
-            _prevHealth = hp;
-            _hitLabelTimer = 1.5f;
-        }
-
-        if (_hitLabelTimer > 0f)
-        {
-            _hitLabelTimer -= Time.deltaTime;
-            string label = _target.LastHitLabel ?? "";
-            bool isHs = label == "HS";
-            _healthText.color = isHs ? Color.red : Color.yellow;
-            _healthText.text = $"{hp} {label}";
-        }
-        else
-        {
-            _healthText.color = Color.white;
-            _healthText.text = hp.ToString();
-        }
-    }
-
-    private void CreateHealthDisplay()
-    {
-        var canvasGo = new GameObject("HealthCanvas");
-        canvasGo.transform.SetParent(transform, false);
-        canvasGo.transform.localPosition = new Vector3(0f, 1.5f, 0f);
-        canvasGo.transform.localScale = Vector3.one * 0.01f;
-
-        var canvas = canvasGo.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.WorldSpace;
-        canvas.sortingOrder = 100;
-
-        var rt = canvasGo.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(100f, 40f);
-
-        var textGo = new GameObject("HealthText");
-        textGo.transform.SetParent(canvasGo.transform, false);
-        _healthText = textGo.AddComponent<TextMeshProUGUI>();
-        _healthText.text = _target.Health.ToString();
-        _healthText.fontSize = 36;
-        _healthText.color = Color.white;
-        _healthText.alignment = TextAlignmentOptions.Center;
-        _healthText.enableWordWrapping = false;
-        _healthText.outlineWidth = 0.3f;
-        _healthText.outlineColor = Color.black;
-
-        var textRt = textGo.GetComponent<RectTransform>();
-        textRt.sizeDelta = new Vector2(100f, 40f);
-        textRt.anchoredPosition = Vector2.zero;
-
-        _healthCanvas = canvasGo.transform;
-    }
-
     private void OnDied(Target t)
     {
         t.Died -= OnDied;
@@ -222,4 +153,34 @@ public class PrefireBot : MonoBehaviour
     {
         if (_target != null) _target.Died -= OnDied;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        var head = transform.Find("Head");
+        if (head != null)
+        {
+            var sc = head.GetComponent<SphereCollider>();
+            if (sc != null)
+            {
+                UnityEditor.Handles.color = new Color(1f, 0.15f, 0.15f, 0.85f);
+                var wc = head.TransformPoint(sc.center);
+                float wr = sc.radius * head.lossyScale.x;
+                UnityEditor.Handles.DrawWireDisc(wc, Vector3.up, wr);
+                UnityEditor.Handles.DrawWireDisc(wc, Vector3.forward, wr);
+                UnityEditor.Handles.DrawWireDisc(wc, Vector3.right, wr);
+            }
+        }
+        var cc = GetComponent<CapsuleCollider>();
+        if (cc != null)
+        {
+            Gizmos.color = new Color(0.2f, 1f, 0.2f, 0.4f);
+            Gizmos.matrix = transform.localToWorldMatrix;
+            float halfHeight = Mathf.Max(0f, cc.height * 0.5f - cc.radius);
+            Gizmos.DrawWireSphere(cc.center + Vector3.up * halfHeight, cc.radius);
+            Gizmos.DrawWireSphere(cc.center - Vector3.up * halfHeight, cc.radius);
+            Gizmos.matrix = Matrix4x4.identity;
+        }
+    }
+#endif
 }

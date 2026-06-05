@@ -34,6 +34,19 @@ public class PlayerController : MonoBehaviour
 
     public float CameraHeight => _cameraTransform != null ? _cameraTransform.localPosition.y : _standCamY;
 
+    public void Teleport(Vector3 position, Quaternion rotation)
+    {
+        if (controller != null) controller.enabled = false;
+        transform.SetPositionAndRotation(position, rotation);
+        _verticalVelocity = 0f;
+        _airVelocity = Vector3.zero;
+        if (controller != null)
+        {
+            controller.enabled = true;
+            controller.Move(Vector3.down * 0.5f);
+        }
+    }
+
     private void Awake()
     {
         if (controller == null) controller = GetComponent<CharacterController>();

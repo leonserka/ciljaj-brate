@@ -12,9 +12,9 @@ public class CrosshairCellHover : MonoBehaviour, IPointerEnterHandler, IPointerE
     private static readonly Color SelectedColor = new Color(1f, 1f, 1f, 0.12f);
     private static readonly Color NormalColor = new Color(1f, 1f, 1f, 0.03f);
 
-    private static AudioClip _hoverClip;
+    private static AudioClip _selectClip;
     private static AudioSource _uiAudio;
-    private const float HoverVolume = 0.15f;
+    private const float HoverVolume = 0.5f;
     private const float HoverScale = 1.15f;
     private const float ScaleSpeed = 10f;
 
@@ -29,7 +29,7 @@ public class CrosshairCellHover : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (transform.childCount > 0)
             _icon = transform.GetChild(0);
 
-        if (_hoverClip == null) _hoverClip = Resources.Load<AudioClip>("UI/hover");
+        if (_selectClip == null) _selectClip = Resources.Load<AudioClip>("UI/click");
         if (_uiAudio == null)
         {
             var existing = GameObject.Find("UIAudio");
@@ -44,8 +44,8 @@ public class CrosshairCellHover : MonoBehaviour, IPointerEnterHandler, IPointerE
         _hovered = true;
         if (_bg != null) _bg.color = HoverColor;
         _targetScale = Vector3.one * HoverScale;
-        if (_hoverClip != null && _uiAudio != null)
-            _uiAudio.PlayOneShot(_hoverClip, HoverVolume);
+        if (_selectClip != null && _uiAudio != null)
+            _uiAudio.PlayOneShot(_selectClip, HoverVolume);
     }
 
     public void OnPointerExit(PointerEventData eventData)

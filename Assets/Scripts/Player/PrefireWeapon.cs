@@ -158,17 +158,19 @@ public class PrefireWeapon : MonoBehaviour
 
         float inaccuracy = CalculateInaccuracy();
 
+        if (playerCamera == null) return;
+        var camT = playerCamera.transform;
+        // Capture shot direction BEFORE applying recoil so the bullet goes where
+        // the crosshair was at the moment of pulling the trigger.
+        Vector3 forward = camT.forward;
+        Vector3 right = camT.right;
+        Vector3 up = camT.up;
+
         if (_look != null && _sprayIndex < RecoilPattern.Length)
         {
             var recoil = RecoilPattern[_sprayIndex];
             _look.ApplyRecoilPunch(recoil.y * RecoilPitchPerShot, recoil.x * RecoilPitchPerShot);
         }
-
-        if (playerCamera == null) return;
-        var camT = playerCamera.transform;
-        Vector3 forward = camT.forward;
-        Vector3 right = camT.right;
-        Vector3 up = camT.up;
 
         Vector2 spread = Random.insideUnitCircle * inaccuracy;
         Vector3 dir = (forward + right * spread.x + up * spread.y).normalized;
@@ -180,6 +182,7 @@ public class PrefireWeapon : MonoBehaviour
             hitPoint = hit.point;
             var target = hit.collider.GetComponentInParent<Target>();
             ModeManager.Current?.HandleShot(target != null);
+            PrefireManager.Instance?.RegisterShot(target != null);
 
             if (target != null && !target.IsDead)
             {
@@ -212,6 +215,7 @@ public class PrefireWeapon : MonoBehaviour
         else
         {
             ModeManager.Current?.HandleShot(false);
+            PrefireManager.Instance?.RegisterShot(false);
         }
 
         Vector3 tracerOrigin = barrelTip != null

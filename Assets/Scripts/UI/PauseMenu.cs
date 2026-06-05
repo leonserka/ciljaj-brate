@@ -100,6 +100,7 @@ public class PauseMenu : MonoBehaviour
         if (_look != null) _look.enabled = false;
         if (_weapon != null) { _weaponWas = _weapon.enabled; _weapon.enabled = false; }
         if (_controller != null) { _controllerWas = _controller.enabled; _controller.enabled = false; }
+
     }
 
     private void Resume()
@@ -252,6 +253,7 @@ public class PauseMenu : MonoBehaviour
             MakeButton("ChangeModeBtn", col.transform, "CHANGE MODE", ButtonBG).onClick.AddListener(ShowModes);
 
         MakeButton("MenuBtn", col.transform, "MAIN MENU", ButtonBG).onClick.AddListener(GoToMainMenu);
+
     }
 
     // ---------------------------------------------------------------- settings view (tabbed)

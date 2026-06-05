@@ -12,7 +12,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private bool textMode;
     public float hoverVolume = 1f;
     // Extra gain on the UI hover/click sounds so they sit a bit louder over the music.
-    private const float SfxBoost = 1.3f;
+    private const float SfxBoost = 1.8f;
 
     private Vector3 _baseScale;
     private Vector3 _targetScale;

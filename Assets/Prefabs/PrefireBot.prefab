@@ -51,8 +51,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.12
-  m_Center: {x: 0.05, y: 1.03, z: 0.25}
+  m_Radius: 0.15
+  m_Center: {x: 0.05, y: 1.08, z: 0.18}
 --- !u!1 &7282160605132399159
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7178146ebc1871e45a1ae64ff6b389bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::PrefireBot
-  damage: 10
+  damage: 5
   fireInterval: 0.5
   firstShotDelay: 0.3
   healOnDeath: 20
