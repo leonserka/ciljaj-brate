@@ -8,6 +8,9 @@ public abstract class GameModeSO : ScriptableObject
     public string ModeName => modeName;
     public float Duration => duration;
 
+    public virtual bool ShowHitFeedback => true;
+    public virtual bool AllowShooting => true;
+
     public abstract void OnEnter(ModeManager manager);
     public abstract void OnExit(ModeManager manager);
     public abstract void OnTargetKilled(ModeManager manager, Target target);

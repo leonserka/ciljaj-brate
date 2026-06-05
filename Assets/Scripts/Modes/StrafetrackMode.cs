@@ -10,6 +10,9 @@ public class StrafetrackMode : GameModeSO
     [SerializeField] private float boundsX = 4f;
     [SerializeField] private float boundsY = 1.5f;
 
+    public override bool ShowHitFeedback => false;
+    public override bool AllowShooting => false;
+
     [System.NonSerialized] private TrackingTarget _target;
 
     public override void OnEnter(ModeManager manager)
@@ -39,6 +42,7 @@ public class StrafetrackMode : GameModeSO
     public override void OnUpdate(ModeManager manager)
     {
         if (_target == null || manager.Stats == null) return;
+        if (RoundController.Instance != null && !RoundController.Instance.RoundActive) return;
         manager.Stats.RecordTrackingFrame(_target.IsOnTarget, Time.deltaTime);
     }
 

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Runtime::MicroshotMode
   modeName: Microshot
   duration: 0
-  spawnerPosition: {x: 0, y: 2.6, z: 7}
-  spawnBox: {x: 1.2, y: 0.8, z: 0}
+  spawnerPosition: {x: 7.04, y: 2.2, z: -48}
+  region: {x: 4, y: 2.4, z: 3}
+  clusterRadius: 0.8
+  depthStep: 1
   targetScale: 0.3

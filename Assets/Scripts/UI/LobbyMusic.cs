@@ -4,7 +4,7 @@ public class LobbyMusic : MonoBehaviour
 {
     [SerializeField] private AudioClip musicClip;
     [SerializeField] private AudioClip startupClip;
-    [SerializeField] private float maxVolume = 0.3f;
+    [SerializeField] private float maxVolume = 0.2f;
     [SerializeField] private float fadeInDuration = 5f;
     [SerializeField] private float fadeOutDuration = 3f;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Ciljaj Brate/Modes/Combo Shredder", fileName = "ComboShredderMode")]
+[CreateAssetMenu(menuName = "Ciljaj Brate/Modes/Gridshot", fileName = "GridshotMode")]
 public class ComboShredderMode : GameModeSO
 {
     [SerializeField] private int gridCols = 4;

@@ -15,7 +15,7 @@ MonoBehaviour:
   modeName: Strafetrack
   duration: 0
   targetPrefab: {fileID: 5476918071094141443, guid: f2c6a8d68428e7c498df8992cc3bb44c, type: 3}
-  spawnPosition: {x: 0, y: 2.6, z: 7}
+  spawnPosition: {x: 7.04, y: 2.2, z: -46}
   targetRadius: 0.5
   moveSpeed: 3
   boundsX: 4

@@ -4405,7 +4405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::PrefireRoute
   routeName: Tunnel to B site
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: a7801fb6ed84b7e4d97e899b85f3dee5, type: 3}
   playerSpawn: {fileID: 1989937434}
   botSpawns: []
 --- !u!4 &1116306143
@@ -5429,7 +5429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::PrefireRoute
   routeName: Short A
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: 4a7aca3fe67b1e149802a431c280584f, type: 3}
   playerSpawn: {fileID: 34158370}
   botSpawns: []
 --- !u!4 &1484097570

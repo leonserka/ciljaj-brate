@@ -8,8 +8,13 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField, Min(60f)] private float fireRateRpm = 600f;
     [SerializeField] private float maxRange = 200f;
     [SerializeField] private LayerMask hitMask = ~0;
-    [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private AudioClip shotClip;
+    [SerializeField, Range(0f, 1f)] private float shotVolume = 0.45f;
+    [SerializeField] private Animator weaponAnimator;
+    [Tooltip("Root of the arms + gun mesh. The PlayerWeapon script usually lives on a " +
+             "separate object, so the viewmodel renderers are NOT its children. Leave " +
+             "empty to auto-detect a sibling with renderers.")]
+    [SerializeField] private GameObject viewmodelRoot;
 
     private AudioSource _audio;
     private InputAction _fireAction;
@@ -20,24 +25,42 @@ public class PlayerWeapon : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         if (playerCamera == null) playerCamera = Camera.main;
 
-        muzzleFlash = GetComponentInChildren<ParticleSystem>(true);
-        if (muzzleFlash != null)
-        {
-            muzzleFlash.gameObject.SetActive(true);
-            muzzleFlash.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        }
-
-        ApplyViewmodelVisibility();
+        SetViewmodelVisible(GameplaySettings.ShowViewmodel);
     }
 
-    private void ApplyViewmodelVisibility()
+    // Shows/hides the arms + gun viewmodel. Called from Awake and from the
+    // settings toggle (PauseMenu) so the "show weapon viewmodel" option works.
+    public void SetViewmodelVisible(bool show)
     {
-        bool show = GameplaySettings.ShowViewmodel;
-        foreach (var r in GetComponentsInChildren<Renderer>(true))
+        var root = ResolveViewmodelRoot();
+        if (root == null) return;
+        foreach (var r in root.GetComponentsInChildren<Renderer>(true))
         {
             if (r is ParticleSystemRenderer) continue;
             r.enabled = show;
         }
+    }
+
+    private GameObject ResolveViewmodelRoot()
+    {
+        if (viewmodelRoot != null) return viewmodelRoot;
+
+        // The viewmodel mesh is typically a sibling of this object (both parented
+        // to the camera). Pick the sibling that actually carries renderers.
+        Transform parent = transform.parent;
+        if (parent != null)
+        {
+            foreach (Transform sib in parent)
+            {
+                if (sib == transform) continue;
+                if (sib.GetComponentInChildren<Renderer>(true) != null)
+                {
+                    viewmodelRoot = sib.gameObject;
+                    return viewmodelRoot;
+                }
+            }
+        }
+        return null;
     }
 
     private void OnEnable()
@@ -66,7 +89,7 @@ public class PlayerWeapon : MonoBehaviour
             if (kb != null && (kb.zKey.wasPressedThisFrame || kb.xKey.wasPressedThisFrame))
                 fire = true;
         }
-        if (fire) TryFire();
+        if (fire && ModeManager.Current?.ActiveMode?.AllowShooting != false) TryFire();
     }
 
     private void TryFire()
@@ -74,8 +97,10 @@ public class PlayerWeapon : MonoBehaviour
         if (Time.time < _nextShotTime) return;
         _nextShotTime = Time.time + 60f / fireRateRpm;
 
-        if (muzzleFlash != null) muzzleFlash.Play();
-        if (_audio != null && shotClip != null) _audio.PlayOneShot(shotClip);
+        // When the viewmodel is hidden, the weapon is meant to be "gone" — mute its fire sound too.
+        if (_audio != null && shotClip != null && GameplaySettings.ShowViewmodel)
+            _audio.PlayOneShot(shotClip, shotVolume);
+        weaponAnimator?.SetTrigger("Fire");
 
         if (playerCamera == null) return;
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);

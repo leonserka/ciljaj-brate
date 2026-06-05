@@ -3426,7 +3426,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 340, y: 240}
+  m_CellSize: {x: 460, y: 384}
   m_Spacing: {x: 24, y: 24}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -9468,50 +9468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Runtime::GameModeSelector
   cardContainer: {fileID: 671983807}
-  cardPrefab: {fileID: 631068509519184589, guid: 995facf424bf14c409e952d6ffefdeef, type: 3}
-  modes:
-  - title: COMBO SHREDDER
-    modeName: Combo Shredder
-    category: SPEED
-    description: 3 targets on a grid. Destroy one, another spawns. Build combos fast.
-    sceneName: AimTraining
-    thumbnail: Thumbnails/gridshot
-    playable: 1
-  - title: CLASSIC
-    modeName: Classic
-    category: FLICK
-    description: Single targets spawn randomly across the wall. Pure flicking practice.
-    sceneName: AimTraining
-    thumbnail: Thumbnails/gridshot
-    playable: 1
-  - title: SPIDERSHOT
-    modeName: Spidershot
-    category: FLICK
-    description: Alternate between center and outer targets. Train crosshair resets.
-    sceneName: AimTraining
-    thumbnail: 
-    playable: 1
-  - title: MICROSHOT
-    modeName: Microshot
-    category: PRECISION
-    description: Tiny targets in a tight area. Pixel-perfect micro-adjustments.
-    sceneName: AimTraining
-    thumbnail: 
-    playable: 1
-  - title: SIXSHOT
-    modeName: Sixshot
-    category: PRECISION
-    description: 6 tiny targets always on screen. Accuracy over speed.
-    sceneName: AimTraining
-    thumbnail: 
-    playable: 1
-  - title: STRAFETRACK
-    modeName: Strafetrack
-    category: TRACKING
-    description: Track a target strafing left and right. Keep your crosshair on it.
-    sceneName: AimTraining
-    thumbnail: 
-    playable: 1
 --- !u!225 &1945416945
 CanvasGroup:
   m_ObjectHideFlags: 0

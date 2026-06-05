@@ -11,6 +11,8 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private float speed = 12f;
     [SerializeField] private bool textMode;
     public float hoverVolume = 1f;
+    // Extra gain on the UI hover/click sounds so they sit a bit louder over the music.
+    private const float SfxBoost = 1.3f;
 
     private Vector3 _baseScale;
     private Vector3 _targetScale;
@@ -77,7 +79,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else
             _targetScale = _baseScale * hoverScale;
 
-        PlayClip(_hoverClip, hoverVolume);
+        PlayClip(_hoverClip, hoverVolume * SfxBoost);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -97,7 +99,7 @@ public class MenuButtonEffect : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (!textMode)
             _targetScale = _baseScale * clickScale;
-        PlayClip(_clickClip, 1f);
+        PlayClip(_clickClip, SfxBoost);
     }
 
     public void OnPointerUp(PointerEventData eventData)

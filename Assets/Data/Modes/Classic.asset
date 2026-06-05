@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Runtime::ClassicMode
   modeName: Classic
   duration: 60
-  spawnerPosition: {x: 0, y: 2.8, z: 14.9}
-  spawnBoxSize: {x: 8.5, y: 3.1, z: 0}
+  spawnerPosition: {x: 7.04, y: 2.2, z: -48}
+  spawnBoxSize: {x: 7, y: 3.2, z: 4}
   minimumDistanceFromLast: 1.6
   respawnDelay: 0.05

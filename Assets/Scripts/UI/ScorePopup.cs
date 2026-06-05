@@ -59,6 +59,7 @@ public class ScorePopup : MonoBehaviour
         _lastScore = stats.Score;
 
         if (Mathf.Abs(diff) < 0.5f) return;
+        if (ModeManager.Current?.ActiveMode?.ShowHitFeedback == false) return;
 
         SpawnPopup(diff);
     }

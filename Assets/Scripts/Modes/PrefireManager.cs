@@ -88,7 +88,11 @@ public class PrefireManager : MonoBehaviour
         ClearBots();
 
         var route = routes[index];
-        route.HideMarkers();
+        // Hide every route's design-time preview bots, not just this one's —
+        // otherwise the other route's markers stay visible (and shootable)
+        // while you're playing the current route.
+        foreach (var r in routes)
+            if (r != null) r.HideMarkers();
 
         _playerController.enabled = false;
         _playerTransform.SetPositionAndRotation(route.PlayerSpawn.position, route.PlayerSpawn.rotation);

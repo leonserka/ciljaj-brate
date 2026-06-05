@@ -8,8 +8,7 @@ public class HitMarker : MonoBehaviour
     [SerializeField] private float expandScale = 1.5f;
     [SerializeField] private float randomOffset = 25f;
     [SerializeField] private AudioClip hitSound;
-    [SerializeField] private AudioClip missSound;
-    [SerializeField] private float missVolume = 0.3f;
+    [SerializeField, Range(0f, 1f)] private float hitVolume = 0.65f;
 
     private CanvasGroup _group;
     private RectTransform _rect;
@@ -62,7 +61,7 @@ public class HitMarker : MonoBehaviour
 
     private void OnStats(SessionStats stats)
     {
-        if (stats.LastShotHit)
+        if (stats.LastShotHit && ModeManager.Current?.ActiveMode?.ShowHitFeedback != false)
         {
             _timer = displayTime;
             _showing = true;
@@ -74,13 +73,9 @@ public class HitMarker : MonoBehaviour
                 Random.Range(-randomOffset, randomOffset));
 
             if (hitSound != null)
-                _audio.PlayOneShot(hitSound);
+                _audio.PlayOneShot(hitSound, hitVolume);
         }
-        else
-        {
-            if (missSound != null)
-                _audio.PlayOneShot(missSound, missVolume);
-        }
+        else { }
     }
 
     private void Update()

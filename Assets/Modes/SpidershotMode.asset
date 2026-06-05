@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Runtime::SpidershotMode
   modeName: Spidershot
   duration: 0
-  spawnerPosition: {x: 0, y: 2.6, z: 7}
-  outerSpawnBox: {x: 5, y: 3, z: 0}
+  spawnerPosition: {x: 7.04, y: 2.2, z: -48}
+  outerSpawnBox: {x: 8, y: 3.2, z: 5}
   centerScale: 0.8
   outerScale: 0.55

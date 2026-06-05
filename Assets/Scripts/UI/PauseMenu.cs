@@ -646,14 +646,10 @@ public class PauseMenu : MonoBehaviour
             _viewmodelToggle.onValueChanged.AddListener(v =>
             {
                 GameplaySettings.ShowViewmodel = v;
-                if (_weapon != null)
-                {
-                    foreach (var r in _weapon.GetComponentsInChildren<Renderer>(true))
-                    {
-                        if (r is ParticleSystemRenderer) continue;
-                        r.enabled = v;
-                    }
-                }
+                // The viewmodel mesh isn't a child of the weapon script's object,
+                // so let the weapon resolve and toggle its own viewmodel root.
+                if (_weapon is PlayerWeapon pw)
+                    pw.SetViewmodelVisible(v);
             });
         }
 
@@ -807,7 +803,7 @@ public class PauseMenu : MonoBehaviour
 
     private static readonly ModeEntry[] _aimModes = new[]
     {
-        new ModeEntry { label = "COMBO SHREDDER", modeName = "Combo Shredder" },
+        new ModeEntry { label = "GRIDSHOT", modeName = "Gridshot" },
         new ModeEntry { label = "CLASSIC", modeName = "Classic" },
         new ModeEntry { label = "SPIDERSHOT", modeName = "Spidershot" },
         new ModeEntry { label = "MICROSHOT", modeName = "Microshot" },

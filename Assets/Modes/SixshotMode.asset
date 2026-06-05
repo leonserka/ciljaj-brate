@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Runtime::SixshotMode
   modeName: Sixshot
   duration: 0
-  spawnerPosition: {x: 0, y: 2.6, z: 7}
-  spawnBox: {x: 5.2, y: 2.9, z: 0}
+  spawnerPosition: {x: 7.04, y: 2.6, z: -49}
+  spawnBox: {x: 6, y: 3, z: 0}
   minimumDistance: 0.6
-  targetScale: 0.25
+  targetScale: 0.22

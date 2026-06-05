@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73462c0035cd51479ea676aafdbd5d3, type: 3}
   m_Name: ComboShredder
   m_EditorClassIdentifier: Game.Runtime::ComboShredderMode
-  modeName: Combo Shredder
+  modeName: Gridshot
   duration: 90
   gridCols: 3
   gridRows: 3
   gridArea: {x: 2.8, y: 2.8, z: 0}
   targetCount: 3
-  spawnerPosition: {x: 0, y: 2.6, z: 7}
+  spawnerPosition: {x: 7.04, y: 2.2, z: -50}
